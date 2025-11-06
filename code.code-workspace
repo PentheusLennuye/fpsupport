@@ -1,0 +1,23 @@
+{
+    "folders": [
+        {
+            "name": "Additional Functional Programming Concepts",
+            "path": ".",
+        }
+    ],
+    "settings": {
+        "python.defaultInterpreterPath": ".venv/bin/python"
+        "python.analysis.autoSearchPaths": true
+    }
+    "cSpell.ignorePaths": [
+		"**/.git/objects/**",
+		"data",
+		"**.code-workspace",
+		"**.env",
+		"tasks.py",
+		"conf.yml",
+		"mkdocs.yml",
+		"pyproject.toml"
+	],
+	"cSpell.language": "en-CA",
+}

@@ -1,0 +1,41 @@
+---
+# header --------------------------------------------------------------
+copyright: "Copyright &copy; George Cummings"
+dev_addr: "127.0.0.1:8001"
+edit_uri: "develop/blob/docs"
+site_name: "FPSupport: Additional Functional Programming Concepts in Python"
+site_url: "https://pages.github.com/PentheusLennuye/fpsupport"
+repo_url: "https://github.com/PentheusLennuye/fpsupport.git"
+# ---------------------------------------------------------------------
+
+markdown_extensions:
+  - "toc":
+    permalink: true
+  - "pymdownx.highlight":
+    anchor_linenums: true
+  - "pymdownx.snippets":
+    base_path: "docs/includes"
+  - "pymdownx.superfences":
+      custom_fences:
+        - name: "mermaid"
+          class: "mermaid"
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - "footnotes"
+
+nav:
+  - Overview: "index.md"
+  - Development: "development.md"
+  - Policies:
+    - Security: "security.md"
+
+plugins:
+  - "search"
+  - "mkdocs-version-annotations"
+  - "mkdocstrings":
+      default_handler: "python"
+      handlers:
+        python:
+          paths: ["."]
+          options:
+            show_root_heading: true
+

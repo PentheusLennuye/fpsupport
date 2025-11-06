@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+#
+# scripts/githooks/pre-commit
+#
+
+echo "running pre-commit checks"
+
+# Ensure the branch name is correct
+name=$(git branch --show-current)
+echo $name | grep -P '^main$|^develop$|^hotfix/|^feature/|^bugfix/|^doc/'
+if [ $? -ne 0 ]; then
+    echo "'$name' is not an exceptable branch name"
+    exit 1
+fi
+"branch name $name is ok"
+
+# Ensure unit tests are all green. 100% coverage is not required at this point.
+poetry run python -m pytest test/unit || exit 2
+
+# Lint away
+#poetry run python -m pylint || exit 3
+#poetry run pydocstyle || exit 4
