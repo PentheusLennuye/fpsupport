@@ -43,6 +43,8 @@ mkdocstrings = "^0.30.1"
 pylint = "^4.0.2"
 pytest-bdd = "^8.1.0"
 pydocstyle = "^6.3.0"
+mkdocstrings-python = "^1.18.2"
+mkdocs-zettelkasten = "^0.4.2"
 
 [tool.pylint]
 max-line-length = 79
