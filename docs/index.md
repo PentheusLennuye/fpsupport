@@ -1,6 +1,4 @@
 ---
-title: Functional Programming Support
-id: 2025110601
 date: 2025-11-06
 tags: [functional programming, python, installation, library]
 author: George Cummings
@@ -8,23 +6,26 @@ author: George Cummings
 
 # Functional Programming Support
 
-This project adds functional programming helpers not covered by the official
-Python function programming tools.
+This project offers Python functional programming helpers not covered by the
+official Python function programming tools.
 
 There are, of course, many many quality Python projects doing the same thing. I
 encourage Python developers to explore them and see if they suit their needs.
 
-This is my FP library. There are many like it, but this one is mine...
+!!! note
+    This is my FP library. There are many like it, but this one is mine...
 
-!!! warning "This is my note"
+## Installation
 
-    This is a note
+```sh
+pip install fpsupport
+```
 
 ## Example: Monads
 
 This library includes monadic patterns such as State, Maybe and Writer monads.
-In the case of the monad I call _Pipeline_, it incorporates all three to remove
-the painful-to-maintain if/then/elses used for logging activities, early
+In the case of the monad that I call _Pipeline_, it incorporates all three to
+remove the painful-to-maintain if/then/elses used for logging activities, early
 returns, and input validating in a chain of responsibility akin to a Jenkins or
 Concourse CI/CD service.
 
@@ -40,13 +41,8 @@ software. OOP also holds that promise. Functional programming promises
 correctness. So does OOP along with a metric ton of tests.
 
 Either can be difficult to comprehend without painful experience. My notes and
-other materials are posted here as well.
-
-## Installation
-
-```sh
-pip install fpsupport
-```
+other materials are posted here to assist folks with _their_ painful
+experiences.
 
 ## Project layout
 
@@ -58,8 +54,6 @@ docs/
 fp/
     monads/
 ```
-
-______________________________________________________________________
 
 [^1]: That is to say, converting a system call made from inside a function to
 an argument of that function.

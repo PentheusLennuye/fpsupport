@@ -23,8 +23,6 @@ nav:
       - Release Notes: content/release.md
   - Policies:
       - Security: content/security.md
-  - Documentation:
-      - Tags: tags.md
 
 # ---------------------------------------------------------------------
 #
@@ -34,10 +32,10 @@ nav:
 
 extra_css:
   - css/extra.css
-  - fontawesome/css/all.css
 
 theme: 
-  name: zettelkasten-solarized-light
+  # name: zettelkasten-solarized-light
+  name: material
   color_mode: auto
   icon:
     admonition:
@@ -88,5 +86,5 @@ plugins:
           paths: ["."]
           options:
             show_root_heading: true
-  - zettelkasten
+  # - zettelkasten
 
