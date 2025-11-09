@@ -9,10 +9,10 @@ author: George Cummings
 This project offers Python functional programming helpers not covered by the
 official Python function programming tools.
 
-There are, of course, many many quality Python projects doing the same thing. I
+There are, of course, many quality Python projects doing the same thing. I
 encourage Python developers to explore them and see if they suit their needs.
 
-!!! note
+!!! note ""
     This is my FP library. There are many like it, but this one is mine...
 
 ## Installation
@@ -36,13 +36,42 @@ injection[^1], so there would be no need to use monkeypatching in unit tests.
 
 ## Training Materials
 
-Functional programming holds the promise of easy-to-follow-and-maintain
-software. OOP also holds that promise. Functional programming promises
-correctness. So does OOP along with a metric ton of tests.
+Functional programming holds the promise of easy-to-follow, easily maintainable,
+and correct software. Sound familiar? Object-oriented programming also holds
+that promise ... so long as the developers use best practice testing and SOLID
+principles.
 
-Either can be difficult to comprehend without painful experience. My notes and
-other materials are posted here to assist folks with _their_ painful
-experiences.
+BOth FP and OOP can be difficult to exploit without painful education or
+experience. My notes and other materials are posted here to assist folks with
+_their_ painful education or experience.
+
+## Statement on the Use of AI
+
+Machine- and deep-learning techniques with one exception are a great benefit to
+humanity. The one exception is the unregulated, ignorant, and inhumane use of
+generative AI.
+
+I do not use generative AI to directly compose my work. I have three reasons:
+
+- I believe the use of generative AI is good for quick answers, but its repeated
+  use removes the barriers a student needs to overcome in order to truly
+  understand a concept[^3] [^4]
+- I dislike the abuse and displacement of the work made by hard-working humans
+  for profit
+- I take pride in my abilities as admin, developer, student, and technical
+  writer. If ordered by my paid profession to use gen AI for its goals, I will
+  do so (and probably be amazed, let's be honest). However, this is my project
+  and I am not under any sponsorship or orders.
+
+Sometimes, search engines defaults come to play and is unavoidable. As of Q4
+2025, there are still enough errors in the answers to warrant caution and
+review.
+
+!!! info "The Use of this Library in AI Development is Welcome"
+    The use of this library to develop AI techniques and models is welcome,
+    including the development of generative AI techniques for education. The author wishes that its
+    use to train generative AI models should have as its goal the assistance
+    of humans rather than their displacement.
 
 ## Project layout
 
@@ -62,3 +91,7 @@ an argument of that function.
 works alongside BDD (Behaviour-Driven Development for system behaviour), and
 ATDD (Acceptance Test-Driven Development as an Agile collaboration with
 stakeholders).
+
+[^3]: Soenke, Ahrens. 2022. _How to Take Smart Notes: One Simple Technique to
+Boost Writing, Learning and Thinking_, 2nd ed, Self-published.
+[^4]: Cal Newport. 2021. _A World Without Email: Reimaginig Work in an Age of Communication Overload_, Portfolio.
