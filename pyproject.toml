@@ -45,6 +45,7 @@ pytest-bdd = "^8.1.0"
 pydocstyle = "^6.3.0"
 mkdocstrings-python = "^1.18.2"
 mkdocs-zettelkasten = "^0.4.2"
+textstat = "^0.7.11"
 
 [tool.pylint]
 max-line-length = 79
