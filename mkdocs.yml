@@ -23,6 +23,7 @@ nav:
       - Release Notes: content/release.md
   - Policies:
       - Security: content/security.md
+      - Documentation: content/documentation_policy.md
 
 # ---------------------------------------------------------------------
 #
