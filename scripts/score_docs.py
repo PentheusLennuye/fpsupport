@@ -1,7 +1,7 @@
 """Scores and suggests corrections on the doc files."""
 
 import os
-import textstat
+from textstat.textstat import textstat
 
 LANG = "en"
 PUBLIC_DOCS = [
@@ -12,7 +12,7 @@ PUBLIC_TARGET = 8
 TECHNICAL_DOCS = [
 
 ]
-TECHNICAL_TARGET = 11
+TECHNICAL_TARGET = 12
 
 CURRENT_DIR = os.path.dirname(os.path.realpath(__file__))
 ROOT_DIR = f"{CURRENT_DIR}/.."

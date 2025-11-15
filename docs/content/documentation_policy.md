@@ -81,4 +81,3 @@ ______________________________________________________________________
       Writing Technical Content_. Scriptorium, 2009.
 
 [^5]: Butterick, Matthew. _Typography for Lawyers_, 2nd ed. Jones McClure, 2018.
-

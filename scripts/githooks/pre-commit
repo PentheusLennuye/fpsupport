@@ -18,5 +18,5 @@ fi
 poetry run python -m pytest test/unit || exit 2
 
 # Lint away
-#poetry run python -m pylint || exit 3
-#poetry run pydocstyle || exit 4
+poetry run python -m pylint . || exit 3
+poetry run pydocstyle || exit 4

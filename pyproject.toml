@@ -27,10 +27,8 @@ Repository = "https://github.com/PentheusLennuye/fpsupport"
 Issues = "https://github.com/PentheusLennuye/fpsupport/issues"
 Changelog = "https://github.com/PentheusLennuye/fpsupport/CHANGELOG.md"
 
-
 [tool.poetry]
 packages = [{include = "fpsupport"}]
-
 
 [tool.poetry.group.dev.dependencies]
 invoke = "^2.2.0"
@@ -48,12 +46,14 @@ mkdocs-zettelkasten = "^0.4.2"
 textstat = "^0.7.11"
 
 [tool.pylint]
+ignore-paths = [".venv", "templates"]
 max-line-length = 79
 score = true
 
 [tool.pydocstyle]
 convention = "google"
 match = "(?!test_).+\\.py"
+match-dir = "[^\\.].*"
 
 [tool.pytest.ini_options]
 addopts = [
@@ -62,7 +62,7 @@ addopts = [
     "--import-mode=importlib"
 ]
 cache_dir = "/tmp/pytest"
-pythonpath = [ "fpsupport", "tests" ]
+pythonpath = [ "fpsupport", "test" ]
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]

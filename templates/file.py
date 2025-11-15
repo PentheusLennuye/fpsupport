@@ -27,7 +27,7 @@ Typical usage example:
   m >> f >> g >> None
 """
 
-from typing import Optional, TypeVar
+from typing import Any, Optional, TypeVar
 
 T = TypeVar("T")
 
@@ -40,6 +40,21 @@ class X:
         thing_a: 
         thing_b:
     """
+    def __init__(self):
+        """Initiate an X object.
+
+        Args:
+            thing_a: description of thing_a
+            thing_b: description of thing_b
+
+        Returns:
+            object X
+
+        Raises:
+            Fizzbuzz error
+        """
+        self.thing_a : Any = None
+        self.thing_b : Any = None
 
     def public_function(self, my_var: Optional[T]) -> int:
         """The summary of the function ended with a period.
@@ -58,4 +73,4 @@ class X:
             FizzBuzzError if fizzbuzz cannot blog.
         
         """
-        assert my_var == my_var
+        return int(my_var)
