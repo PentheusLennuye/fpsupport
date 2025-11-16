@@ -36,14 +36,14 @@ Note that functions do not have to be in the Monad class to be considered part
 of the Monad's collection. In fact, I have found that most functions are not in
 the Monad class but spread throughout a programme that uses the Monad object as
 its argument.
-    
+
 -----
 
 Typical usage example:
 
   from typing import Callable, Self
   from fpsupport import monad
-  
+
   class MyMonad(monad.Monad):
       def __init__(self, t: int) -> Self:
           '''Initialize the MyMonad with internal and wrapped attributes.'''
@@ -61,7 +61,7 @@ Typical usage example:
       @staticmethod
       def map(t: int) -> int:
           '''Execute this automatically before each bind.'''
-          self.odd_check = t & 1  
+          self.odd_check = t & 1
           return t
 
       final = unit
@@ -84,11 +84,15 @@ from fpsupport import exception
 
 T = TypeVar("T")
 
+
 class Monad:
     """The Monad Base Class
 
     An interface to the base class. It contains the three mandatory functions,
     and it also creates aliases for the different names for those functions.
+
+    Note that this monad has an inherent "Maybe" component: if a derived
+    subclass's map() returns None, then bound execution is stopped.
 
     Attributes:
         There are no attributes. Any attribute will be defined by a derived
@@ -99,10 +103,10 @@ class Monad:
 
         This is meant to be overridden by subclasses, ensuring super() is
         called.
-        
+
         Monads are meant to be called from unit().
         """
-        self.a : Optional[T] = a
+        self.a: Optional[T] = a
 
     @staticmethod
     def unit(a: Optional[T]) -> Self:
@@ -130,6 +134,9 @@ class Monad:
         operator. The bind operator in Python is represented with ">>", the
         __rshift__ operator.
 
+        Note that this monad has an inherent "Maybe" component: if a derived
+        subclass's map() returns None, then bound execution is stopped.
+
         Args:
             f: a function
 
@@ -141,6 +148,9 @@ class Monad:
             Monad.
         """
         a_prime = self.map(self.unwrap())
+        if a_prime is None:
+            return self
+
         result = f(a_prime)
         if not isinstance(result, type(self)):
             self._fail(f.__name__)
@@ -161,14 +171,15 @@ class Monad:
         )
 
     @staticmethod
-    def map(a: Optional[T]) -> Optional[T]:
+    def map(a: Optional[T]) -> Optional[T] | None:
         """Massage the original variables while executing internal functions.
 
         This function is meant to be overridden.
 
         Args:
-            a: the original type
-        
+            a: the original type, or
+            None: do not execute the bound function.
+
         Returns:
             a_prime: the original type, possibly modified
         """

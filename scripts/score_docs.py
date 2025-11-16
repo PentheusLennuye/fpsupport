@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 """Scores and suggests corrections on the doc files."""
 
 import os
@@ -6,7 +7,8 @@ from textstat.textstat import textstat
 LANG = "en"
 PUBLIC_DOCS = [
     "index.md",
-    "content/ai_policy.md"
+    "content/ai_policy.md",
+    "content/exception_handling.md",
 ]
 PUBLIC_TARGET = 8
 TECHNICAL_DOCS = [

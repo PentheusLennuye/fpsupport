@@ -27,6 +27,12 @@ Repository = "https://github.com/PentheusLennuye/fpsupport"
 Issues = "https://github.com/PentheusLennuye/fpsupport/issues"
 Changelog = "https://github.com/PentheusLennuye/fpsupport/CHANGELOG.md"
 
+[tool.coverage.run]
+omit = [
+    "test/*",
+    ".venv"
+]
+
 [tool.poetry]
 packages = [{include = "fpsupport"}]
 
@@ -57,12 +63,12 @@ match-dir = "[^\\.].*"
 
 [tool.pytest.ini_options]
 addopts = [
-    "--ignore=environments",
     "--ignore=.venv",
     "--import-mode=importlib"
 ]
 cache_dir = "/tmp/pytest"
 pythonpath = [ "fpsupport", "test" ]
+testpaths = ["test"]
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]

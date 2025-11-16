@@ -15,14 +15,14 @@ from fpsupport import exception, monad
 
 class TestBaseClass(TestCase):
     """Test the Monad Base Class.
-    
+
     Before defining a Monad, I will define "type."
     A "type" is any construct. For example a type could be a scalar, a
     function, an object, or an object composed of scalars, functions, and
     other objects.
 
     A Monad is a monoid in the class of endofunctors. Casting category theory
-    to the side, all this means is that Monad is a collection of functions. The 
+    to the side, all this means is that Monad is a collection of functions. The
     functions are:
       - A single function that encapsulates the type into the Monad
       - Any number of "bind" functions that accept only the Monad as its
@@ -34,7 +34,7 @@ class TestBaseClass(TestCase):
     part of the Monad's collection. In fact, I have found that most functions
     are not in the Monad class but spread throughout a programme that uses the
     Monad object as its argument.
-    
+
     Although not strictly required in category theory, in reality a Monad
     should offer an "unwrap" function that returns the original type with its
     altered values. A Monad can contain its own internal attributes.
@@ -63,25 +63,47 @@ class TestBaseClass(TestCase):
         # then
         assert (m >> monadic_add_one).unwrap() == 2
 
-
-    def test_bind(self):
-        """Test that the bind operator works while testing subclassing."""
-        # given
-        class MyMonad(monad.Monad):
+    def test_flat_map_stop_on_map_returns_none(self):
+        """Checks that a simple monadic function works with the base class."""
+        # given a map that returns None to its flat_map() function
+        class MyMonad(monad.Monad):  # pragma: no cover
             """Demonstrates how to subclass Monads."""
             @staticmethod
             def unit(a: int) -> Self:
                 return MyMonad(a)
 
             @staticmethod
+            def map(a: int) -> None:
+                """This stops execution of the bound function."""
+                print("Hi Mom")
+                return None
+
+        def monadic_add_one(a: int) -> monad.Monad:
+            """A very simple working function."""
+            return MyMonad(a + 1)
+
+        # when
+        m = MyMonad(1)
+
+        # then monadic_add_one should not execute.
+        assert (m >> monadic_add_one).unwrap() == 1
+
+    def test_bind(self):
+        """Test that the bind operator works while testing subclassing."""
+        # given
+        class MyMonad(monad.Monad):
+            """Demonstrate map and bind operator."""
+            @staticmethod
+            def unit(a: int) -> Self:
+                return MyMonad(a)
+
+            @staticmethod
             def map(a: int) -> int:
-                print("mapped", a + 1)
                 return a + 1
 
             final = unit
 
         def monadic_add_one(a: int) -> monad.Monad:
-            print("monadic", a + 1)
             return MyMonad(a + 1)
 
         # when
@@ -89,10 +111,7 @@ class TestBaseClass(TestCase):
 
         # then
         assert (
-            m >>
-            monadic_add_one >>
-            monadic_add_one >>
-            MyMonad.final
+            m >> monadic_add_one >> monadic_add_one >> MyMonad.final
         ).unwrap() == 10
 
     def test_bind_failure(self):
