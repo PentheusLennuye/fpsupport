@@ -24,6 +24,7 @@ nav:
   - Policies:
       - Security: content/security.md
       - Documentation: content/documentation_policy.md
+      - Exception Handling: content/exception_handling.md
 
 # ---------------------------------------------------------------------
 #
