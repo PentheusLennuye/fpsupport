@@ -1,6 +1,6 @@
-"""The IO Monad
+"""Testing the IO Monad
 
-fpsupport/io_monad.py Copyright 2025 George Cummings
+fpsupport/test_io_monad.py Copyright 2025 George Cummings
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use
 this file except in compliance with the License. You may obtain a copy of the
@@ -107,34 +107,31 @@ io = IOMonad(module_a.FileType())
 print(do_stuff(io))
 """
 
-from dataclasses import dataclass
-from typing import Self, Optional, TypeVar
+from unittest import TestCase
 
-from fpsupport import exception, Monad
+import pytest
 
-T = TypeVar("T")
+from fpsupport import exception, IOMonad, IOType
 
+class TestIOMonad(TestCase):
+    """Ensuring the IO Monad works."""
+    def test_unit_fails_on_bad_arg(self):
+        """unit() should only except IOType as its argument."""
+        with pytest.raises(exception.MonadException):
+            IOMonad.unit({"this": "should not work"})
 
-@dataclass
-class IOType:
-    """A structure that is passed to an IOMonad as its sole argument."""
-    contents: Optional[T]
-    ok: bool = True
-    error_msg: str = ""
+    def test_unit_works_with_iotype(self):
+        """unit() returns an IOMonad."""
+        io = IOMonad.unit(IOType("stub content"))
+        assert io.a.contents == "stub content"
 
+    def test_unit_works_with_iotype_derivative(self):
+        """unit() returns an IOMonad."""
+        class FileType(IOType):
+            """Adds filepath to the IOType"""
+            def __init__(self, filepath: str = ""):
+                super().__init__("")
+                self.filepath: str = filepath
 
-class IOMonad(Monad):
-    """IOMonad encapsulates any call with an uncertain result.
-
-    It is meant to be passed as an argument to a function with the uncertainty
-    reduced to known attributes and types.
-    """
-    def __init__(self, a: IOType) -> Self:
-        super().__init__(a)
-
-    @staticmethod
-    def unit(a: IOType) -> Self:
-        """Type converter a -> M a."""
-        if not isinstance(a, IOType):
-            raise exception.MonadException("IOMonad requires IOType")
-        return IOMonad(a)
+        io = IOMonad.unit(FileType("mkdocs.yml"))
+        assert io.a.filepath == "mkdocs.yml"

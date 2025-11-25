@@ -63,31 +63,6 @@ class TestBaseClass(TestCase):
         # then
         assert (m >> monadic_add_one).unwrap() == 2
 
-    def test_flat_map_stop_on_map_returns_none(self):
-        """Checks that a simple monadic function works with the base class."""
-        # given a map that returns None to its flat_map() function
-        class MyMonad(monad.Monad):  # pragma: no cover
-            """Demonstrates how to subclass Monads."""
-            @staticmethod
-            def unit(a: int) -> Self:
-                return MyMonad(a)
-
-            @staticmethod
-            def map(a: int) -> None:
-                """This stops execution of the bound function."""
-                print("Hi Mom")
-                return None
-
-        def monadic_add_one(a: int) -> monad.Monad:
-            """A very simple working function."""
-            return MyMonad(a + 1)
-
-        # when
-        m = MyMonad(1)
-
-        # then monadic_add_one should not execute.
-        assert (m >> monadic_add_one).unwrap() == 1
-
     def test_bind(self):
         """Test that the bind operator works while testing subclassing."""
         # given

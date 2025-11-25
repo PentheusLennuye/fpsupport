@@ -148,8 +148,6 @@ class Monad:
             Monad.
         """
         a_prime = self.map(self.unwrap())
-        if a_prime is None:
-            return self
 
         result = f(a_prime)
         if not isinstance(result, type(self)):
@@ -171,7 +169,7 @@ class Monad:
         )
 
     @staticmethod
-    def map(a: Optional[T]) -> Optional[T] | None:
+    def map(a: Optional[T]) -> Optional[T]:
         """Massage the original variables while executing internal functions.
 
         This function is meant to be overridden.
