@@ -113,6 +113,9 @@ import pytest
 
 from fpsupport import exception, IOMonad, IOType
 
+# pylint: disable=unnecessary-lambda
+
+
 class TestIOMonad(TestCase):
     """Ensuring the IO Monad works."""
     def test_unit_fails_on_bad_arg(self):
@@ -122,15 +125,16 @@ class TestIOMonad(TestCase):
 
     def test_unit_works_with_iotype(self):
         """unit() returns an IOMonad."""
-        io = IOMonad.unit(IOType("stub content"))
+        io = IOMonad.unit(IOType((lambda x: IOMonad(x)), "stub content"))
         assert io.a.contents == "stub content"
+        assert io.call().unwrap().contents == "stub content"
 
     def test_unit_works_with_iotype_derivative(self):
         """unit() returns an IOMonad."""
         class FileType(IOType):
             """Adds filepath to the IOType"""
             def __init__(self, filepath: str = ""):
-                super().__init__("")
+                super().__init__((lambda x: x), "")
                 self.filepath: str = filepath
 
         io = IOMonad.unit(FileType("mkdocs.yml"))

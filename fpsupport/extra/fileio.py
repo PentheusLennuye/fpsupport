@@ -16,26 +16,22 @@ specific language governing permissions and limitations under the License.
 -----
 
 This example uses the functional programming principles of immutable code and
-"pure" functions. It may seem silly at first, but think again on the principle
-of dependency injection: instead of "print" and "fileopen," think of DB
-and network API operations.
+"pure" functions. It may seem silly at first, but this is a toy problem
+Think again on the principle of dependency injection: instead of "print()",
+think of DB calls requiring input validation.
 """
 
 from copy import deepcopy
+from typing import Callable
+
 from fpsupport import IOMonad, IOType
 
 
 class FileType(IOType):
     """Adds filepath to the IOType"""
-    def __init__(self, filepath: str = ""):
-        super().__init__("")
+    def __init__(self, fn: Callable, filepath: str = ""):
+        super().__init__(fn, "")
         self.filepath: str = filepath
-
-
-def mprint(a: IOType) -> IOMonad:
-    """A simple, monadic print."""
-    print(a.contents)
-    return IOMonad(a)
 
 
 def open_text_file(a: FileType) -> IOMonad:
@@ -49,37 +45,47 @@ def open_text_file(a: FileType) -> IOMonad:
     Returns:
         a new IOMonad
     """
-    b = deepcopy(a)
+    b = deepcopy(a)  # immutable
     try:
         with open(b.filepath, "r", encoding="utf-8") as fp:
             b.contents = fp.read()
-            b.error = False
+            b.ok = True
             b.error_msg = ""
     except OSError as e:
         b.contents = None
-        b.error = True
+        b.ok = False
         b.error_msg = f"opening '{e.filename}' failed with '{e.strerror}'"
     return IOMonad(b)
 
 
-def set_filepath(io: IOMonad, filepath: str) -> IOMonad:
-    '''Populate the Monad with a filepath.'''
-    io_struct = io.unwrap()
-    io_struct.filepath = filepath
-    return IOMonad(io_struct)
-
 # Testing ------------------------------------------------------------------
 
+def print_file_contents(fmonad: IOMonad, pmonad: IOMonad) -> bool:
+    """Just a simple function trying to do its thing, testably.
 
-def print_file_contents(systemcall: IOMonad, filemonad: IOMonad) -> bool:
-    """Just a simple function trying to do its thing, testably."""
-    fopen = deepcopy(filemonad)
-    fopen = set_filepath(fopen, "mkdocs.yml")
-    res = (fopen >> open_text_file).unwrap()
+    Note how we use immutable data, even in such a simple function.
+
+    Although this function uses monads, it itself does not belong to the
+    IOMonad realm and cannot be bound to them.
+
+    It *is*, however, an example of fp programming, as functions are first-
+    class objects, immutability is maintained, and this can be tested as
+    given inputs will always return the same outputs. In this case,
+    print_file_contents is merely an AND gate.
+    """
+    res = fmonad.call().unwrap()
     if not res.ok:
         return False
-    return (systemcall >> mprint).unwrap().ok
+
+    printer = deepcopy(pmonad)  # immutability
+    printer.a.contents = res.contents
+
+    # Looking for ok is silly, because print() is not going to fail.
+    return printer.call().unwrap().ok
 
 
-if __name__ == "__main__":
-    print_file_contents(IOMonad(IOType("")), IOMonad(FileType("")))
+if __name__ == "__main__":  # pragma: no cover
+    print_file_contents(
+        IOMonad(FileType(open_text_file, "mkdocs.yml")),
+        IOMonad(IOType((lambda x: print(x.contents) or IOMonad(x)), ""))
+    )
