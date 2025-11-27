@@ -4,22 +4,8 @@ This project adds functional programming helpers up and beyond (and sometimes
 parallels) official Python function programming tools.
 
 There are, of course, many many quality Python projects doing the same thing. I
-encourage Python developers to explore them and see if they suit their needs.
-
-This is my FP library. There are many like it, but this one is mine...
-
-## Example: Monads
-
-For example, my library includes monadic patterns such as State, Maybe and
-Writer monads. In the case of the monad I call _Pipeline_, it incorporates all
-three to remove the painful-to-maintain if/then/elses used for logging
-activities, early returns, and input validating in a chain of responsibility
-akin to a Jenkins or Concourse CI/CD service.
-
-Of interest to a TDD^2 enthusiast is the IO monad, used to hide not only system
-calls but any other side effect or non-deterministic value that plays havoc with
-the correctness of a function. It is used in dependency injection^1, so there
-would be no need to use monkeypatching in unit tests.
+encourage Python developers to explore them as well and see if they suit their
+needs.
 
 ## Training Materials
 
@@ -35,8 +21,46 @@ and other materials are posted here as well.
 ```sh
 pip install fpsupport
 ```
-______________________________________________________________________
 
-^1: That is to say, converting a system call made from inside a function to an argument of that function.
+## Examples
 
-^2: Test-driven development, used to encourage technical correctness. It works alongside BDD (Behaviour-Driven Development for system behaviour), and ATDD (Acceptance Test-Driven Development as an Agile collaboration with stakeholders).
+### Monads
+
+This library includes monadic patterns such as State, Maybe and Writer monads.
+In the case of the monad that I call _Pipeline_, it incorporates all three to
+be used as a logged chain-of-responsibility[^1] pattern.
+
+Of interest to a TDD[^2] enthusiast is the IO monad, used to hide not only
+system calls but any other side effect or non-deterministic[^3] value that plays
+havoc with the proof of a function. It is used in dependency injection[^4], so
+there would be no need to use monkeypatching in unit tests.
+
+#### Are monads Pythonic?
+
+This will be debated in the training materials once written. The answer is,
+quite frankly, up to the writer. They certainly seem to add complication at
+first glance, violating _simple is better than complex_. However, it enforces
+_explicit is better than implicit_ and, properly used, is the epitome of
+_readability counts_.
+
+See [The Zen of Python](https://peps.python.org/pep-0020/).
+
+
+## Further Reading
+
+See [docs](docs/index.md).
+
+
+[^1]: Refactoring.Guru. [Chain of Responsibility]
+(https://refactoring.guru/design-patterns/chain-of-responsibility), retrieved
+Nov 26, 2025.
+
+[^2]: Test-driven development, used to encourage technical correctness. It works
+alongside BDD (Behaviour-Driven Development for system behaviour), and ATDD
+(Acceptance Test-Driven Development as an Agile collaboration with
+stakeholders).
+
+[^3]: For example, a random number generator.
+
+[^4]: That is to say, converting a system call made from inside a function to an
+argument of that function.
