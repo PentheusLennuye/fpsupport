@@ -80,7 +80,7 @@ Typical usage example:
 from copy import deepcopy
 from typing import Callable, Self, Optional, TypeVar
 
-from fpsupport import exception
+from . import exception
 
 T = TypeVar("T")
 

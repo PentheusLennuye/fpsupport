@@ -110,7 +110,8 @@ print(do_stuff(io))
 from dataclasses import dataclass
 from typing import Self, Optional, TypeVar
 
-from fpsupport import exception, Monad
+from . import exception
+from .monad import Monad
 
 T = TypeVar("T")
 

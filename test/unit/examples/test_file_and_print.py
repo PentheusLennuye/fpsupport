@@ -68,7 +68,7 @@ class TestOpenTextFile(TestCase):
         # given
         mock_open.side_effect = OSError(1, "file not found", "mkdocs.yml")
 
-        # then
+        # then.
         assert fp.print_file_contents(IOMonad(IOType(""))) is False
 
     @patch("fpsupport.examples.file_and_print.open")
