@@ -15,96 +15,9 @@ specific language governing permissions and limitations under the License.
 
 -----
 
-Description:
-
-A "side effect" is any transfer of data into and out of a function that does
-not go through the function call or its return.
-
-def my_impure_function(a: int) -> None:
-    print(a)   # Side effect! A call to the system.
-
-def my_second_impure_function(a: dict) -> None:
-    a["wolf"] = "in the fold"  # Side effect!
-                               # The function changed a memory location outside
-                               # the function's scope.
-
-A function that contains any side effect is called "impure." This sounds pretty
-awful, but being "impure" is not a criticism, just a label. Any function that
-prints to screen is impure. Any function that writes to disk, moves a robotic
-arm, or merely sends information to the operating system is impure. Of course,
-outside academics, a program is useless outside if it cannot change the outside
-environment.
-
-Nonetheless, there is a huge advantage to keeping side effects outside
-functions as much as possible: provability without relying heavily on patching
-and fixtures, and easy-to-understand structure.
-
-To do this,
-
-- use a monad to encapsulate a side-effect call
-- ensure the monad has clearly defined, testable outcomes
-- pass the monad to functions as one of its arguments.
-
-The IO Monad I propose uses this structure to deal with any call where the
+The IO Monad I propose uses a structure to deal with any call where the
 results are not known: system calls that might break; calls to network APIs;
 calls for random numbers, and so on.
-
------
-
-Typical usage example. open_text_file() and FileType would be defined in a
-user-defined library to the side of the main workflow.
-
-# module_a: file IO -------------------
-
-from copy import deepcopy
-from fpsupport import IOMonad, IOType
-
-class FileType(IOType):
-    '''Adds filepath to the IOType'''
-    def __init__(self, filepath: str = ""):
-        super().__init__("")
-        self.filepath: str = filepath
-
-
-def open_text_file(a: FileType) -> IOMonad:
-    '''A bound function'''
-    b = deepcopy(a)
-    try:
-        with open(b.filepath, "r", encoding="utf-8") as fp:
-            b.contents = fp.read()
-            b.error = False
-            b.error_msg = ""
-    except OSError as e:
-        b.contents = None
-        b.error = True
-        b.error_msg = f"opening '{e.filename}' failed with '{e.strerror}'"
-    return IOMonad(b)
-
-
-def set_filepath(io: IOMonad, filepath: str) -> IOMonad:
-    '''Populate the Monad with a filepath.'''
-    io_struct = io.unwrap()
-    io_struct.filepath = filepath
-    return IOMonad(io_struct)
-
-
-main workflow ------------
-
-import module_a
-
-def do_stuff(io: module_a.IOMonad) -> str:
-    '''Just a function trying to do its thing, testably.'''
-    #
-    # ...
-    #
-    new_io = module_a.set_filepath(io, "mkdocs.yml")
-    res = (io.set_filepath("mkdocs.yml") >> module_a.open_text_file).unwrap()
-    if res.ok:
-        return res.contents
-    ... do something else
-
-io = IOMonad(module_a.FileType())
-print(do_stuff(io))
 """
 
 from unittest import TestCase
@@ -125,17 +38,7 @@ class TestIOMonad(TestCase):
 
     def test_unit_works_with_iotype(self):
         """unit() returns an IOMonad."""
-        io = IOMonad.unit(IOType((lambda x: IOMonad(x)), "stub content"))
+        io = IOMonad.unit(IOType("stub content"))
         assert io.a.contents == "stub content"
-        assert io.call().unwrap().contents == "stub content"
-
-    def test_unit_works_with_iotype_derivative(self):
-        """unit() returns an IOMonad."""
-        class FileType(IOType):
-            """Adds filepath to the IOType"""
-            def __init__(self, filepath: str = ""):
-                super().__init__((lambda x: x), "")
-                self.filepath: str = filepath
-
-        io = IOMonad.unit(FileType("mkdocs.yml"))
-        assert io.a.filepath == "mkdocs.yml"
+        assert io.a.ok
+        assert not io.a.error_msg

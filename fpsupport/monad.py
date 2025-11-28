@@ -124,7 +124,7 @@ class Monad:
         """Returns myself."""
         return self
 
-    def flat_map(self, f: Callable) -> Self:
+    def flat_map(self, f: Callable, *args, **kwargs) -> Self:
         """Execute _f_ with the wrapped values as the argument.
 
         Unwraps the original type, sends it to map for some pre-execution
@@ -149,7 +149,7 @@ class Monad:
         """
         a_prime = self.map(self.unwrap())
 
-        result = f(a_prime)
+        result = f(a_prime, *args, **kwargs)
         if not isinstance(result, type(self)):
             self._fail(f.__name__)
         return result

@@ -108,7 +108,7 @@ print(do_stuff(io))
 """
 
 from dataclasses import dataclass
-from typing import Callable, Self, Optional, TypeVar
+from typing import Self, Optional, TypeVar
 
 from fpsupport import exception, Monad
 
@@ -118,7 +118,6 @@ T = TypeVar("T")
 @dataclass
 class IOType:
     """A structure that is passed to an IOMonad as its sole argument."""
-    function: Callable  # this must return an IOMonad
     contents: Optional[T]
     ok: bool = True
     error_msg: str = ""
@@ -139,7 +138,3 @@ class IOMonad(Monad):
         if not isinstance(a, IOType):
             raise exception.MonadException("IOMonad requires IOType")
         return IOMonad(a)
-
-    def call(self) -> Self:
-        """Call the IOType's function."""
-        return self.flat_map(self.a.function)
