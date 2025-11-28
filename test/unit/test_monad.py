@@ -14,36 +14,12 @@ from fpsupport import exception, monad
 
 
 class TestBaseClass(TestCase):
-    """Test the Monad Base Class.
-
-    Before defining a Monad, I will define "type."
-    A "type" is any construct. For example a type could be a scalar, a
-    function, an object, or an object composed of scalars, functions, and
-    other objects.
-
-    A Monad is a monoid in the class of endofunctors. Casting category theory
-    to the side, all this means is that Monad is a collection of functions. The
-    functions are:
-      - A single function that encapsulates the type into the Monad
-      - Any number of "bind" functions that accept only the Monad as its
-        argument and returns only the Monad
-      - One of those functions is called the _identity_ function, which only
-        returns itself.
-
-    Note that functions do not have to be in the Monad class to be considered
-    part of the Monad's collection. In fact, I have found that most functions
-    are not in the Monad class but spread throughout a programme that uses the
-    Monad object as its argument.
-
-    Although not strictly required in category theory, in reality a Monad
-    should offer an "unwrap" function that returns the original type with its
-    altered values. A Monad can contain its own internal attributes.
-    """
+    """Test the Monad Base Class."""
 
     def test_identity(self):
         """Test that Monad.identity(M) returns M."""
-        m = monad.Monad(5)
-        assert m == m.identity()
+        m = monad.Monad(5)  # using __init__ instead of unit() for coverage.
+        assert m.identity() == 5
 
     def test_unit_and_unwrap(self):
         """Test that (M a).unwrap() returns a."""
@@ -73,7 +49,7 @@ class TestBaseClass(TestCase):
                 return MyMonad(a)
 
             @staticmethod
-            def map(a: int) -> int:
+            def outer(a: int) -> int:
                 return a + 1
 
             final = unit

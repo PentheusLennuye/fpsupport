@@ -1,4 +1,4 @@
-"""The IO Monad
+"""An opinionated version of the IO Monad.
 
 fpsupport/io_monad.py Copyright 2025 George Cummings
 
@@ -131,11 +131,16 @@ class IOMonad(Monad):
     reduced to known attributes and types.
     """
     def __init__(self, a: IOType) -> Self:
+        """Overriding the base class to use IOType for type checking."""
         super().__init__(a)
 
     @staticmethod
     def unit(a: IOType) -> Self:
-        """Type converter a -> M a."""
+        """Type converter a -> M a.
+
+        This ensures that this monad will never change its wrapped type 'a'.
+
+        """
         if not isinstance(a, IOType):
             raise exception.MonadException("IOMonad requires IOType")
         return IOMonad(a)

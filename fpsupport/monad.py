@@ -1,4 +1,4 @@
-"""The Base Monad Class
+"""An opinionated version of The Monad.
 
 fpsupport/monad.py Copyright 2025 George Cummings
 
@@ -23,19 +23,26 @@ Before defining a Monad, I will define "type." A "type" is any construct. For
 example a type could be a scalar, a function, an object, or an object composed
 of scalars, functions, and other objects.
 
-A Monad is a monoid in the class of endofunctors. Casting category theory to
-the side, all this means is that Monad is a collection of functions. The
-functions are:
-    - A single function that encapsulates the type into the Monad
-    - Any number of "bind" functions that accept only the Monad as its argument
-      and returns only the Monad
-    - One of those functions is called the _identity_ function, which only
-      returns itself.
+A Monad is a monoid in the class of endofunctors.
 
-Note that functions do not have to be in the Monad class to be considered part
-of the Monad's collection. In fact, I have found that most functions are not in
-the Monad class but spread throughout a programme that uses the Monad object as
-its argument.
+- An endofunctor is a function that returns the same type as it takes in. Using
+  python typing, the signature of an integer endofunctor would be
+  "def my_function(x: int) -> int". A dict endofunctor would be
+  "def my_function(x: dict) -> dict".
+
+- A monoid is a collection of three functions:
+    - A _unit_ function that encapsulates a type, call it type "a"
+    - Any number of "bind" functions that call an outside function and expect
+      type "a" back
+    - An _identity_ function, which returns type "a" with its current values.
+
+- A monoid has some mathematic rules. We will skip them here and just get on
+  with it working as an object that hides data and does hidden operations on
+  that hidden data, while keeping its type.
+
+A monad is a monoid, but being in the class of endofunctors, its functions must
+accept and return the same type. This file provides the basics, but to be
+useful, it needs to be subclassed.
 
 -----
 
@@ -104,7 +111,8 @@ class Monad:
         This is meant to be overridden by subclasses, ensuring super() is
         called.
 
-        Monads are meant to be called from unit().
+        Monads are meant to be called from unit() so type checking can be
+        implemented.
         """
         self.a: Optional[T] = a
 
@@ -114,18 +122,19 @@ class Monad:
 
         Also known as the type converter. Also known as pure().
 
-        This must be overridden by base classes. It may seem silly to return
-        a new Monad (or subclass) rather than self, but one of the tenets of
-        functional programming is immutable data.
+        This must be overridden by base classes to implement type checking on
+        the wrapped type 'a'. It may seem silly to return a new Monad (or
+        subclass) rather than self, but one of the tenets of functional
+        programming is immutable data.
         """
         return Monad(a)
 
     def identity(self) -> Self:
-        """Returns myself."""
-        return self
+        """Returns a. Also known as 'unwrap'."""
+        return self.a
 
     def flat_map(self, f: Callable, *args, **kwargs) -> Self:
-        """Execute _f_ with the wrapped values as the argument.
+        """Execute _f_ with the wrapped type as the first argument.
 
         Unwraps the original type, sends it to map for some pre-execution
         massaging, and then sends it through _f_.
@@ -133,9 +142,6 @@ class Monad:
         Also known as chain, join_map, select, then_apply and the bind
         operator. The bind operator in Python is represented with ">>", the
         __rshift__ operator.
-
-        Note that this monad has an inherent "Maybe" component: if a derived
-        subclass's map() returns None, then bound execution is stopped.
 
         Args:
             f: a function
@@ -147,7 +153,7 @@ class Monad:
             MonadException if the function fails to return the same type of
             Monad.
         """
-        a_prime = self.map(self.unwrap())
+        a_prime = self.outer(self.unwrap())  # Permits a set of repeatable ops.
 
         result = f(a_prime, *args, **kwargs)
         if not isinstance(result, type(self)):
@@ -155,7 +161,7 @@ class Monad:
         return result
 
     def _fail(self, fn_name: str) -> None:
-        """Fails the Monad.
+        """Throws an exception with an explanation.
 
         Args:
             fn_name: the name of the function that triggered the failure.
@@ -169,23 +175,21 @@ class Monad:
         )
 
     @staticmethod
-    def map(a: Optional[T]) -> Optional[T]:
-        """Massage the original variables while executing internal functions.
+    def outer(a: Optional[T]) -> Optional[T]:
+        """A function that is run just prior to the flat_map's bound function.
 
-        This function is meant to be overridden.
+        This function is not required for the definition of a monad. However,
+        it allows for a defined set of repeatable operations.
+
+        outer() is meant to be overridden, so its base here is just identity().
 
         Args:
             a: the original type, or
-            None: do not execute the bound function.
 
         Returns:
             a_prime: the original type, possibly modified
         """
         return deepcopy(a)
-
-    def unwrap(self) -> Optional[T]:
-        """Return the original type."""
-        return self.a
 
     # Aliases
 
@@ -198,4 +202,5 @@ class Monad:
     pure = unit
     select = flat_map
     then_apply = flat_map
+    unwrap = identity
     __rshift__ = flat_map
