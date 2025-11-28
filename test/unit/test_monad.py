@@ -75,7 +75,8 @@ class TestBaseClass(TestCase):
                 return MyMonad(a)
 
             @staticmethod
-            def map(a: int) -> int:
+            def outer(a: int) -> int:
+                """This will change the type to string. Bad!"""
                 print("mapped", a + 1)
                 return a + 1
 

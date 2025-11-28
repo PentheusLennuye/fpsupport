@@ -13,7 +13,7 @@ if [ $? -ne 0 ]; then
     echo "'$name' is not an exceptable branch name"
     exit 1
 fi
-"branch name $name is ok."
+echo "branch name $name is ok."
 
 # Ensure unit tests are all green. 100% coverage is not required at this point.
 echo -n "Running unit tests..."
