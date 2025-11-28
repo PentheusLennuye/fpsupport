@@ -16,5 +16,10 @@ _=$(which poetry) || (
 poetry install
 
 echo "Setting up git hooks"
-rm -f $GITHOOKS_DIR/*.sample
+if [ -d $GITHOOKS_DIR ]; then
+    rm -f $GITHOOKS_DIR/*
+else
+    mkdir -p $GITHOOKS_DIR
+fi
+
 find $HOOKS_SOURCE_DIR -type f -exec cp {} $GITHOOKS_DIR \;
