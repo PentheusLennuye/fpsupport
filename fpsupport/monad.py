@@ -80,6 +80,8 @@ Typical usage example:
 from copy import deepcopy
 from typing import Callable, Self, Optional, TypeVar
 
+import inspect
+
 from fpsupport import exception
 
 T = TypeVar("T")
@@ -98,61 +100,82 @@ class Monad:
         There are no attributes. Any attribute will be defined by a derived
         class __init()__, and populated by the class unit() function.
     """
-    def __init__(self, a: Optional[T]) -> Self:
+    def __init__(self, outer: Optional[T]) -> Self:
         """Initializes the object with internal attributes.
 
-        This is meant to be overridden by subclasses, ensuring super() is
-        called.
-
         Monads are meant to be called from unit().
+
+        Args:
+            outer: the wrapped type
+
+        Returns:
+            self
+
+        Raises:
+            MonadException if the class was instantiated directly and not from
+            unit()
         """
-        self.a: Optional[T] = a
+        print(inspect.stack()[1].function)
+        if inspect.stack()[1].function != "unit":
+            raise exception.MonadException("monad instantiated outside unit()")
+        self.outer: Optional[T] = outer
 
     @staticmethod
-    def unit(a: Optional[T]) -> Self:
+    def unit(outer: Optional[T]) -> Self:
         """Wraps the arguments into this Monad. a -> M a.
 
         Also known as the type converter. Also known as pure().
 
-        This must be overridden by base classes. It may seem silly to return
-        a new Monad (or subclass) rather than self, but one of the tenets of
-        functional programming is immutable data.
-        """
-        return Monad(a)
+        If Monad is subclassed, then this function must also be overridden to
+        return its own subclass.
 
+        It may seem silly to return a new Monad (or subclass) rather than self,
+        but one of the tenets of functional programming is immutable data.
+
+        Args:
+          outer: any object
+
+        Returns:
+          Monad
+        """
+        return Monad(outer)
+
+    @property
     def identity(self) -> Self:
-        """Returns myself."""
-        return self
+        """Returns the wrapped type. M a -> a """
+        return self.outer
 
     def flat_map(self, f: Callable, *args, **kwargs) -> Self:
         """Execute _f_ with the wrapped values as the argument.
 
         Unwraps the original type, sends it to map for some pre-execution
-        massaging, and then sends it through _f_.
+        massaging, and then sends it through _f_ along with other arguments.
+
+        M a -> (a -> M b) -> M b
 
         Also known as chain, join_map, select, then_apply and the bind
         operator. The bind operator in Python is represented with ">>", the
         __rshift__ operator.
 
-        Note that this monad has an inherent "Maybe" component: if a derived
-        subclass's map() returns None, then bound execution is stopped.
-
         Args:
             f: a function
+            *args: additional positional arguments
+            **kwargs: additional keyword arguments
 
         Returns:
             A Monad
 
         Raises:
-            MonadException if the function fails to return the same type of
-            Monad.
+            MonadException if the function fails to return the same type as
+            the original wrapped value. This is necessary in a duck-typed
+            language.
         """
-        a_prime = self.map(self.unwrap())
+        outer_prime = self.map(self.identity)
 
-        result = f(a_prime, *args, **kwargs)
-        if not isinstance(result, type(self)):
+        result = f(outer_prime, *args, **kwargs)
+        if not isinstance(result, type(self.outer)):
             self._fail(f.__name__)
-        return result
+        return type(self).unit(result)
 
     def _fail(self, fn_name: str) -> None:
         """Fails the Monad.
@@ -169,28 +192,32 @@ class Monad:
         )
 
     @staticmethod
-    def map(a: Optional[T]) -> Optional[T]:
-        """Massage the original variables while executing internal functions.
+    def map(outer: Optional[T]) -> Optional[T]:
+        """Massage the original variables through executing internal functions.
 
-        This function is meant to be overridden.
+        This function is meant to be overridden by Monad's subclasses.
 
         Args:
-            a: the original type, or
-            None: do not execute the bound function.
+            outer: the original type
 
         Returns:
-            a_prime: the original type, possibly modified
+            outer_prime: the original type, with possibly modified values
         """
-        return deepcopy(a)
+        return deepcopy(outer)
 
-    def unwrap(self) -> Optional[T]:
-        """Return the original type."""
-        return self.a
+    def final(self) -> Self:
+        """Run the map by itself without calling any function.
+
+        This is called optionally. For example, if the map() function calls
+        a Writer, it will write out any remaining buffer.
+        
+        Returns:
+            subclassed object
+        """
+        return type(self).unit(self.map(self.outer))
 
     # Aliases
-
     chain = flat_map
-    final = unit  # Used to ensure the map is run one last time if necessary
     flatMap = flat_map
     fmap = flat_map
     join_map = flat_map
@@ -198,4 +225,5 @@ class Monad:
     pure = unit
     select = flat_map
     then_apply = flat_map
+    unwrap = identity
     __rshift__ = flat_map
