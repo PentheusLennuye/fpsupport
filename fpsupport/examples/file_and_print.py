@@ -27,7 +27,7 @@ See test/unit/example/file_and_print.py to see how to unit test the contents.
 
 from copy import deepcopy
 
-from fpsupport import IOMonad, IOType
+from fpsupport.iomonad import IOMonad, IOType
 
 
 def open_text_file(a: IOType, *args, **kwargs) -> IOMonad:
