@@ -58,7 +58,7 @@ T = TypeVar("T")
 
 
 class Monad:
-    """The Monad Base Class
+    """The Monad Base Class.
 
     An interface to the base class. It contains the three mandatory functions,
     and it also creates aliases for the different names for those functions.
