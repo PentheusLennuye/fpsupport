@@ -59,26 +59,11 @@ class TestBaseClass(TestCase):
         result = (m >> monadic_add_one >> monadic_add_one).final()
         assert result.identity == 10
 
-#    def test_bind_failure(self):
-#        """Test that the bind operator fails with an exception.""""
-#        # given
-#        class MyMonad(monad.Monad):
-#            """Demonstrates how to subclass Monads."""
-#            @staticmethod
-#            def unit(outer: int) -> Self:
-#                return MyMonad(outer)
-#
-#            @staticmethod
-#            def map(outer: int) -> int:
-#                print("mapped", outer + 1)
-#                return outer + 1
-#
-#            final = unit
-#
-#        # when
-#        m = MyMonad.unit(5)
-#
-#        # then
-#        with pytest.raises(exception.MonadException):
-#            m >> (lambda x: x + 1)  # pylint: disable=pointless-statement
-#
+    def test_bind_failure(self):
+        """Test that the bind operator fails with an exception."""
+        # given
+        m = monad.Monad.unit(5)
+
+        # then
+        with pytest.raises(exception.MonadException):
+            m >> (lambda x: str(x + 1))  # pylint: disable=w0106
