@@ -50,7 +50,6 @@ Typical usage example:
 
 """
 
-from copy import deepcopy
 from typing import Callable, Self, Optional, TypeVar
 
 from . import exception
