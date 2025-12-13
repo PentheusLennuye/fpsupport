@@ -8,10 +8,9 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [0.1]
 
-### 0.1.0 YYYY-mm-dd
+### 0.1.0 2025-12-13
 
-- Place a summary of the work
-- added, using one line for every
-- feature, bugfix or acceptance item, but
-- documentation does not count
+- Initial commit into main
+- One basic monad, one decorator, two IO functions
+- Starting documentation up but not yet cleaned or simplified
 
