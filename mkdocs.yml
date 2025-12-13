@@ -1,0 +1,92 @@
+---
+# header --------------------------------------------------------------
+copyright: "Copyright &copy; George Cummings"
+dev_addr: "127.0.0.1:8001"
+edit_uri: "develop/blob/docs"
+repo_url: "https://github.com/PentheusLennuye/fpsupport.git"
+site_name: "FPSupport: Additional Functional Programming Concepts in Python"
+site_url: "https://pages.github.com/PentheusLennuye/fpsupport"
+watch:
+  - docs
+
+# ---------------------------------------------------------------------
+#
+# NAVIGATION
+#
+# ---------------------------------------------------------------------
+nav:
+  - Overview: index.md
+  - User Guide: content/user.md
+  - Development Guide:
+      - Change Log: content/CHANGELOG.md
+      - Contributing: content/development.md
+      - Release Notes: content/release.md
+  - Policies:
+      - Security: content/security.md
+      - Documentation: content/documentation_policy.md
+      - Exception Handling: content/exception_handling.md
+
+# ---------------------------------------------------------------------
+#
+# THEME
+#
+# ---------------------------------------------------------------------
+
+extra_css:
+  - css/extra.css
+
+theme: 
+  # name: zettelkasten-solarized-light
+  locale: en_CA
+  name: material
+  color_mode: auto
+  icon:
+    admonition:
+      note: fontawesome/solid/note-sticky
+      abstract: fontawesome/solid/book
+      info: fontawesome/solid/circle-info
+      tip: fontawesome/solid/bullhorn
+      success: fontawesome/solid/check
+      question: fontawesome/solid/circle-question
+      warning: fontawesome/solid/triangle-exclamation
+      failure: fontawesome/solid/bomb
+      danger: fontawesome/solid/skull
+      bug: fontawesome/solid/robot
+      example: fontawesome/solid/flask
+      quote: fontawesome/solid/quote-left
+  user_color_mode_toggle: true
+
+# ---------------------------------------------------------------------
+#
+# EXTENDING MKDOCS
+#
+# ---------------------------------------------------------------------
+
+
+markdown_extensions:
+  - admonition
+  - footnotes
+  - pymdownx.details:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.snippets:
+      base_path: "docs/includes"
+  - pymdownx.superfences:
+      custom_fences:
+        - name: "mermaid"
+          class: "mermaid"
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - toc:
+      permalink: true
+
+plugins:
+  - search
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          paths: ["."]
+          options:
+            show_root_heading: true
+  # - zettelkasten
+
