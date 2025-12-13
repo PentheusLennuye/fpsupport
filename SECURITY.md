@@ -19,7 +19,7 @@ preferred method is to create an issue in this project's GitHub repository:
 
 ### In GitHub
 
-1. Open <https://github.tools.sap/cpe/secrets-manager-service/issues>
+1. Open <https://github.com/PentheusLennuye/fpsupport/issues>
 2. Click on _New Issue_ and fill out the following fields:
    - Add a title: A one-sentence summary of the bug, prefixed with SECURITY
                   CRIT, HIGH, MODERATE, LOW. Example: _SECURITY CRIT SQL

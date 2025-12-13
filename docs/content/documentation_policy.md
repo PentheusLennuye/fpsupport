@@ -60,18 +60,18 @@ emotional memory. Make 'em laugh, make 'em cry. Keep it professional.
 ### Easy on the Eyes
 
 - Use technical writing skills to break up long sentences, format lists,
-  and emphasize points. I refer to Pringle2009[^4] as I am a perpetual
+  and emphasize points. I refer to Pringle2009[^5] as I am a perpetual
   beginner.
 - For page displays, make good decisions for white space, fonts, kerning,
   spacing, and so forth. I am personally a fan of
-  [Butterick2018](https://typographyforlawyers.com/)[^5].
+  [Butterick2018](https://typographyforlawyers.com/)[^6].
 
 ______________________________________________________________________
 
 [^1]: Public Works and Government Services Canada, _The Canadian Style: A
       Guide to Writing and Editing_, rev. ed. Dundurn Press, 1997.
 
-[^2] Peter Morville and Louis Rosenfeld, _Information Architecture for the World
+[^2]: Peter Morville and Louis Rosenfeld, _Information Architecture for the World
      Wide Web_. O'Reilly Media, 2011.
 
 [^3]: Orwell, George. _Politics and the English Language_. Penguin Classics,
