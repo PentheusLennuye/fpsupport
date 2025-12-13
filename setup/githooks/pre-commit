@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+#
+# File: developer_setup/githooks/pre-push
+#
+echo "Before pushing, running tests"
+
+# Ensure the branch name is correct
+echo -n "1. Checking that branch naming is correct..."
+name=$(git branch --show-current)
+echo $name | grep -E '^main$|^develop$|^hotfix/|^feature/|^bugfix/|^doc/'
+if [ $? -ne 0 ]; then
+    echo "'$name' is not an acceptable branch name"
+    exit 1
+fi
+echo "branch name $name is ok."
+
+echo "1. black formatting, forced"
+poetry run make black | grep "reformatted" && \
+  (echo "Black changed the code. Re-add and commit"; exit 1)
+
+echo "2. Unit tests"
+poetry run make unittest || exit 2
+poetry run make coverage || exit 2
+
+echo "3. pylint"
+poetry run make pylint || exit 3
+
+echo "4. pydocstyle"
+poetry run make pydocstyle || exit 4
+
+echo "6. spelling"
+poetry run make spellcheck || exit 5
+
+echo "Cleanliness checked. This does not include functional tests." 

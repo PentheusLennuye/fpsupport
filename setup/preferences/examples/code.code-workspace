@@ -1,0 +1,48 @@
+{
+    "folders": [
+        {
+            "name": "FPSupport",
+            "path": "."
+        }
+    ],
+    "settings": {
+        "python.languageServer": "Pylance",
+        "python.analysis.autoSearchPaths": true,
+        "python.defaultInterpreterPath": ".venv/bin/python",
+        "cSpell.words": [
+            "ATDD",
+            "endofunctor",
+            "endofunctors",
+            "flesch",
+            "fmap",
+            "fpsupport",
+            "fread",
+            "functors",
+            "githook",
+            "isort",
+            "kincaid",
+            "mkdocs",
+            "monkeypatching",
+            "monoid",
+            "pydocstyle",
+            "Pylint",
+            "pylintrc",
+            "pyproject",
+            "pytest",
+            "Pythonic",
+            "rcfile",
+            "textstat",
+            "venv"
+        ],
+        "cSpell.ignorePaths": [
+            "**/.git/objects/**",
+            "data",
+            "**.code-workspace",
+            "**.env",
+            "conf.yml",
+            "mkdocs.yml",
+            "pyproject.toml"
+        ],
+        "cSpell.language": "en-ca"
+    }
+}
