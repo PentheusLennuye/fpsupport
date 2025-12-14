@@ -1,0 +1,5 @@
+color = true
+line-length = 99
+safe = true
+skip-magic-trailing-comma = true
+target-version = ['py312']

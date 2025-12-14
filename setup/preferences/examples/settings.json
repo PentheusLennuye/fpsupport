@@ -1,0 +1,30 @@
+{
+  "black-formatter.args": ["-l 99", "-t py312"],
+  "editor.fontFamily": "Input Mono, Menlo, Monaco, 'Courier New', monospace",
+  "editor.inlayHints.enabled": "off",
+  "editor.rulers": [ 99, 120 ],
+  "git.openRepositoryInParentFolders": "never",
+  "git.ignoreMissingGitWarning": true,
+  "markdownlint.config": {
+  },
+  "pylint.lintOnChange": false,
+  "remote.SSH.remotePlatform": {
+    "*.gitpod.io": "linux"
+  },
+  "telemetry.telemetryLevel": "off",
+  "terminal.integrated.defaultProfile.linux": "zsh",
+  "terminal.integrated.fontFamily": "MesloLGS NF",
+  "vim.handleKeys": {
+    "<C-f>": false,
+    "<C-d>": true,
+    "<C-s>": false,
+    "<C-z>": false
+  },
+  "window.zoomLevel": 1,
+  "workbench.startupEditor": "none",
+  "workbench.colorTheme": "",
+  "workbench.iconTheme": "",
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter"
+  }
+}
