@@ -8,7 +8,7 @@ from fpsupport.struct import IOType
 
 
 class TestIOType(TestCase):
-    """Testing the IOType init.""" 
+    """Testing the IOType init."""
 
     def test_fail_bad_ok(self):
         """OK must be boolean or None."""

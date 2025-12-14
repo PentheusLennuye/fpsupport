@@ -1,13 +1,27 @@
 """This module wraps file I/O functions in a monad.
 
-They follow the same pattern: they accept an IOType and additional positional and keyword
-arguments.
+fpsupport/file.py Copyright 2025 George Cummings
 
-If IOType.ok is cleared (False), then the function will return immediately without changing the
-IOType data. Otherwise, they execute a function and return a monad.
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in
+compliance with the License. You may obtain a copy of the License at
 
-As Python is not a lazy-evaluation language, this will permit pure functions to test its
-reaction to an IO error as a simple boolean without mocking.
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under the License
+is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+implied. See the License for the specific language governing permissions and limitations under the
+License.
+
+----
+
+All I/O operations follow the same pattern: they accept an IOType and additional positional and
+keyword arguments.
+
+@side_effect: if IOType.ok is cleared (False or None), then the function will return immediately
+without changing the IOType data. Otherwise, they execute a function and return a monad.
+
+As Python is not a lazy-evaluation language, this will permit pure functions to test its reaction
+to an IO error as a simple boolean without mocking.
 """
 
 from typing import Callable

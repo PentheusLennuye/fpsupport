@@ -1,4 +1,23 @@
-"""Basic Jinja Operations wrapped in I/O Monads."""
+"""Basic Jinja Operations wrapped in I/O Monads.
+
+fpsupport/jinja.py Copyright 2025 George Cummings
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in
+compliance with the License. You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under the License
+is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+implied. See the License for the specific language governing permissions and limitations under the
+License.
+
+See fpsupport.file.py for an explanation of the pattern.
+
+This is just one example of how a monad can be used to prevent I/O side effects from messing up
+your unit tests. It also keeps Exceptions and all sorts of if/then/else/buts from cluttering your
+code.
+"""
 
 import pathlib
 

@@ -22,6 +22,10 @@ and debugging chaos. These obstacles can be prevented by type checking and using
 There are, of course, many many quality Python projects creating functional tools. I encourage
 developers to explore them as well and see if they suit their needs.
 
+## Licence
+
+The code and documentation is licensed under the Apache 2.0 licence. See [LICENCE](LICENSE).
+
 ## Installation
 
 ```sh
