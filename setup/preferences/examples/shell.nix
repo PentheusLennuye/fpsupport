@@ -34,10 +34,10 @@ pkgs.mkShell {
         deleted=$([ `git ls-files -d | wc -l` -gt 0 ] && echo -n "x")
         modified=$([ `git ls-files -m | wc -l` -gt 0 ] && echo -n "!")
         staged=$([ `git diff --staged --name-only | wc -l` -gt 0 ] && echo -n "+")
-        git status | grep -q "ahead" && ahead_behind="⇡"
-        git status | grep -q "behind" && ahead_behind="$ahead_behind⇣"
+        ahead=$([ `git rev-list --count @{u}..HEAD` -gt 0 ] && echo -n "⇡")
+        behind=$([ `git rev-list --count HEAD..@{u}` -gt 0 ] && echo -n "⇣")
 
-        PS1="$dir $rs$branch [$modified$deleted$staged$untracked$ahead_behind]\n> "
+        PS1="$dir $rs$branch [$modified$deleted$staged$untracked$ahead$behind]\n> "
      }
 
      export PROMPT_COMMAND=update_prompt
