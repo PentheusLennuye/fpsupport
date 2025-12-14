@@ -12,6 +12,8 @@
 
 .DEFAULT_GOAL := setup
 .SILENT:
+PREFDIR = setup/preferences
+EXAMPLES = $(PREFDIR)/examples
 
 # Environment ---------------------------------------------------------------
 
@@ -23,8 +25,15 @@ venv:
 githooks:
 	setup/githook_setup.sh
 
+.PHONY: defaults 
+defaults:
+	[ -f code.code-workspace ] || cp $(EXAMPLES)/code.code-workspace .; \
+	[ -f $(PREFDIR)/black.toml ] || cp $(EXAMPLES)/black $(PREFDIR)/black.toml; \
+	[ -f $(PREFDIR)/pylintc ] || cp $(EXAMPLES)/pylintrc $(PREFDIR); \
+	[ -f /etc/NIXOS ] && ([ -f $(PREFDIR)/pylintc ] || cp $(EXAMPLES)/shell.nix .)
+
 .PHONY: setup
-setup: venv githooks
+setup: venv githooks defaults
 
 # Linting --------------------------------------------------------------------
 .PHONY: pylint

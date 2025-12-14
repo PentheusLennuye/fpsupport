@@ -3,9 +3,7 @@
 with import <nixpkgs> {};
 let
   blue = "\\e[0;94m";
-  green = "\\e[0;32m";
-  yellow ="\\e[0;33m";
-  red = "\\e[1;31m";
+  me = "fpsupport";
   reset="\\e[0m";
 in
 pkgs.mkShell {
@@ -25,19 +23,26 @@ pkgs.mkShell {
   shellHook = ''
      export LD_LIBRARY_PATH=$NIX_LD_LIBRARY_PATH
 
-     branch=$(git status 2>/dev/null | grep 'On branch' | sed 's/On branch //')
-     dc="${blue}"
-     rs="${reset}"
-     if [ "$branch" == "main" ]; then
-        bc="${red}"
-     elif [ "$branch" == "develop" ]; then
-        bc="${yellow}"
-     else
-        bc="${green}"
-     fi
-     dir=$(pwd | sed 's/.*\(fpsupport\)/\1/')
+     # Define PS1 every return -----------------------------------------------------------
+     update_prompt() {
+        dc="${blue}"
+        rs="${reset}"
 
-     export PS1="$dc\nnix-shell:…/\$dir: $bc$branch$rs\n> "
+        branch=" $(git status 2>/dev/null | grep 'On branch' | sed 's/On branch //')"
+        dir="$dc\nnix-shell:…/\$(pwd | sed 's/.*\(${me}\)/\1/')"
+        untracked=$([ `git ls-files -o --exclude-standard | wc -l` -gt 0 ] && echo -n "?")
+        deleted=$([ `git ls-files -d | wc -l` -gt 0 ] && echo -n "x")
+        modified=$([ `git ls-files -m | wc -l` -gt 0 ] && echo -n "!")
+        staged=$([ `git diff --staged --name-only | wc -l` -gt 0 ] && echo -n "+")
+        git status | grep -q "ahead" && ahead_behind="⇡"
+        git status | grep -q "behind" && ahead_behind="$ahead_behind⇣"
+
+        PS1="$dir $rs$branch [$modified$deleted$staged$untracked$ahead_behind]\n> "
+     }
+
+     export PROMPT_COMMAND=update_prompt
    '';
 }
+
+
 
