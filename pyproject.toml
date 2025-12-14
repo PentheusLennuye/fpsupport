@@ -22,7 +22,7 @@ license = "Apache-2.0"
 name = "fpsupport"
 readme = "README.md"
 requires-python = ">=3.9"
-version = "0.1.0"
+version = "0.2.0"
 
 [project.urls]
 changelog = "https://github.com/PentheusLennuye/fpsupport/blob/master/CHANGELOG.md"
