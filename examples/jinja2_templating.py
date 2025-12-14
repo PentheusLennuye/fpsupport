@@ -1,8 +1,25 @@
 """This provides an example of jinja2 templates through monad.
 
+fpsupport/examples/jinja2_templating.py Copyright 2025 George Cummings
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in
+compliance with the License. You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under the License
+is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+implied. See the License for the specific language governing permissions and limitations under the
+License.
+
+---
+
+Description:
+
 Although it adds seemingly needless complication, wrapping Jinja in a monad permits better
 proof. Additionally, the _load_template()_ and _render()_ code is very, very reusable. Perhaps the
 one-liner on line 54 is all you need in your own program.
+
 """
 
 import pathlib

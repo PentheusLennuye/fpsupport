@@ -1,5 +1,23 @@
 #!/usr/bin/env python
-"""An example of using a monad for a provable function using side effects."""
+"""An example of using a monad for a provable function using side effects.
+
+fpsupport/examples/multiply_random.py Copyright 2025 George Cummings
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in
+compliance with the License. You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under the License
+is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+implied. See the License for the specific language governing permissions and limitations under the
+License.
+
+---
+
+Description: a rather silly example of using a monad to hide a non-deterministic function.
+"""
+
 
 import random
 
@@ -27,6 +45,14 @@ def multiply_random(M: monad.Monad, value: float) -> float:  # pylint: disable=i
     return monad.unwrap(M.flat_map(randint, 0, 100)) * value
 
 
+if __name__ == "__main__":
+    m = monad.Monad.unit()
+    print(multiply_random(m, 3))  # Could be anything, really
+
+
+# Testing. Ensures that the function says what it does -----------------
+
+
 def test_multiply_random() -> None:
     """Prove that multiply_random will multiply a random value.
 
@@ -35,8 +61,3 @@ def test_multiply_random() -> None:
     Usage: python -m pytest examples/multiply_random.py
     """
     assert multiply_random(monad.Monad.unit(3), 3) == 9
-
-
-if __name__ == "__main__":
-    m = monad.Monad.unit()
-    print(multiply_random(m, 3))  # Could be anything, really

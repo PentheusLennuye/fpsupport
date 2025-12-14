@@ -2,51 +2,55 @@
 
 fpsupport/monad.py Copyright 2025 George Cummings
 
-Licensed under the Apache License, Version 2.0 (the "License"); you may not use
-this file except in compliance with the License. You may obtain a copy of the
-License at
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in
+compliance with the License. You may obtain a copy of the License at
 
     http://www.apache.org/licenses/LICENSE-2.0
 
-Unless required by applicable law or agreed to in writing, software distributed
-under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
-CONDITIONS OF ANY KIND, either express or implied. See the License for the
-specific language governing permissions and limitations under the License.
+Unless required by applicable law or agreed to in writing, software distributed under the License
+is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+implied. See the License for the specific language governing permissions and limitations under the
+License.
 
 -----
 
 Description:
 
-< Place here what the base class is for>
+Before defining a Monad, I will define "type." A "type" is any construct. For example a type could
+be a scalar, a function, an object, or an object composed of scalars, functions, and other objects.
 
-Before defining a Monad, I will define "type." A "type" is any construct. For
-example a type could be a scalar, a function, an object, or an object composed
-of scalars, functions, and other objects.
+"A Monad is a monoid in the category of endofunctors, what's the problem?" - James Iry, in [A
+Brief, Incomplete, and Mostly Wrong History of Programming
+Languages](https://james-iry.blogspot.com/2009/05/brief-incomplete-and-mostly-wrong.html)
 
-A Monad is a monoid in the class of endofunctors with two additional functors.
+The definition above was Mr. Iry's inside joke, but it does have a hint of truth. Let's break it
+down:
 
-- An endofunctor is a function that returns the same type as it takes in. Using
-  python typing, the signature of an integer endofunctor would be
-  "def my_function(x: int) -> int". A dict endofunctor would be
-  "def my_function(x: dict) -> dict".
+- An _endofunctor_ is a function that returns the same type as it takes in. For example, using
+  python typing, the signature of an integer endofunctor would be "def my_function(x: int) -> int".
+  A dict endofunctor would be "def my_function(x: dict) -> dict".
 
-- A monoid is a collection of three functions:
-    - A _unit_ function that encapsulates a type, call it type "a"
-    - Any number of "bind" functions that call an outside function and expect
-      type "a" back
-    - An _identity_ function, which returns type "a" with its current values.
+- A monoid is a collection of functions that will always return the same type.  Max Cerrina made an
+  analogy on the post [Explain what a monoid is like I'm five"]
+  (https://dev.to/nickytonline/explain-what-a-monoid-is-like-im-five-4gpf) in May, 2018. In short,
+  he said that if you start with a pile of sticks and do things to those sticks, what do you have?
+  You still have a pile of sticks. In his words, "They didn't turn into frogs."
 
-- A monoid has some mathematic rules. We will skip them here and just get on
-  with it working as an object that hides data and does hidden operations on
-  that hidden data, while keeping its type.
+A _monad_ is a monoid, but since it is in the class of endofunctors, its functions must accept and
+return the same type. A monad has some mathematic rules. We will skip them here and just get on
+with its practical application. A monad is an object that hides data and does hidden operations on
+that hidden data while it processes outside ("bound") functions.
 
-A monad is a monoid, but being in the class of endofunctors, its functions must
-accept and return the same type. This file provides the basics, but to be
-useful, it needs to be sub-classed.
+Practically, a monad is a collection of three functions:
 
------
+- A _unit_ function that encapsulates a type, call it type "a" into itself, called "M a"
+- Any number of "join" functions that take an outside function as one of their arguments, and
+  expect type "M a" back
+- An _identity_ function, which returns type "M a" with its current values.
 
-Typical usage example:
+Note that a monad does not have to be class or even a struct (in another language), just a
+collection. However, through painful experience I find it better that a monad be a class, and it
+accepts objects (or named tuples) as its wrapped type.
 """
 
 # pylint: disable=unused-variable
