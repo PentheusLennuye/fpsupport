@@ -1,16 +1,42 @@
-[tool.poetry]
-name = "fpsupport"
-version = "0.1.0"
-description = "Functional Programming library and lessons"
+[project]
 authors = [
-  "George Cummings <gmc@cummings-online.ca>",
+  { name ="George Cummings", email = "gmc@cummings-online.ca"}
 ]
+classifiers = [
+  "Development Status::4 - Beta",
+  "Intended Audience::Developers",
+  "Intended Audience::Education",
+  "License::OSI Approved::Apache Software License",
+  "Programming Language::Python::3",
+  "Topic::Software Development::Libraries::Python Modules",
+  "Topic::Software Development::Testing::Unit",
+]
+dependencies = [
+  "pydantic>=2.10.5",
+  "pydantic-settings>=2.8",
+  "jinja2>=3.1.6"
+]
+description = "Functional Programming Library and Lessons"
+keywords = [ "fp", "functional programming", "io", "monad" ]
+license = "Apache-2.0"
+name = "fpsupport"
 readme = "README.md"
+requires-python = ">=3.9"
+version = "0.1.0"
+
+[project.urls]
+changelog = "https://github.com/PentheusLennuye/fpsupport/blob/master/CHANGELOG.md"
+documentation = "https://pentheuslennuye.github.io/fpsupport/"
+homepage = "https://pentheuslennuye.github.io/fpsupport/"
+issues = "https://github.com/PentheusLennuye/fpsupport/issues"
+repository = "https://github.com/PentheusLennuye/fpsupport.git"
+
+[tool.poetry]
 
 [tool.poetry.dependencies]
 python = ">=3.12,<4.0"
 pydantic = "^2.10.5"
-pydantic-settings = "2.8.1"
+pydantic-settings = "2.12.0"
 jinja2 = "^3.1.6"
 
 [tool.poetry.group.dev.dependencies]
