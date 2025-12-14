@@ -52,7 +52,7 @@ class TestLoadTemplate(TestCase):
         # then
         new_io = unwrap(result)
         assert new_io.ok
-        assert new_io.contents == "template"
+        assert new_io.outcome == "template"
 
 
 class TestRender(TestCase):
@@ -99,7 +99,7 @@ class TestRender(TestCase):
         # then
         new_io = unwrap(result)
         assert new_io.ok
-        assert new_io.contents == "bar"
+        assert new_io.outcome == "bar"
 
 
 class TestRenderFromFile(TestCase):

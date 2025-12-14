@@ -24,7 +24,8 @@ developers to explore them as well and see if they suit their needs.
 
 ## Licence
 
-The code and documentation is licensed under the Apache 2.0 licence. See [LICENCE](LICENSE).
+The code and documentation is licensed under the Apache 2.0 licence. See the LICENSE file in the
+repository.
 
 ## Installation
 
@@ -57,7 +58,7 @@ print(render_from_file(
 ```
 
 To see how _render_from_file_ is unit tested and how IO is dealt with without mocking, read the
-[example](examples/jinja2_templating.py).
+[example](https://github.com/PentheusLennuye/fpsupport/blob/main/examples/jinja2_templating.py).
 
 ## Training Materials
 
@@ -83,7 +84,8 @@ work-load.
 
 ## Statement on the Use of AI
 
-See my [Personal Policy on the Use of Artificial Intelligence](content/ai_policy.md).
+See my [Personal Policy on the Use of Artificial
+Intelligence](https://pentheuslennuye.github.io/fpsupport/content/ai_policy.md)
 
 ## Project layout
 
@@ -140,7 +142,7 @@ make setup
 ```
 
 Now you can program away without messing up my standards. For suggested VS Code plugins, see
-[preferences](setup/preferences/examples/README.md).
+[preferences](https://github.com/PentheusLennuye/fpsupport/blob/main/setup/preferences/examples/README.md).
 
 [^1]: Refactoring.Guru. [Chain of
     Responsibility](https://refactoring.guru/design-patterns/chain-of-responsibility), retrieved

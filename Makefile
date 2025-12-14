@@ -75,12 +75,12 @@ spellcheck:
 .PHONY: unittest
 unittest:
 	echo "Running python unit tests."; \
-	poetry run python -m pytest test/unit
+	poetry run python -m pytest tests/unit
 
 .PHONY: coverage
 coverage:
 	echo "Running python unit tests for all green at 100% coverage."; \
-	poetry run python -m pytest test/unit \
+	poetry run python -m pytest tests/unit \
 	--cov --cov-report=term-missing | grep 'TOTAL.*100%'
 
 .PHONY: tests

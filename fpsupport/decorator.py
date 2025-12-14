@@ -32,16 +32,19 @@ def side_effect(function: Callable) -> Callable:
 
     - Setting Object.ok to "True" means nothing: the function continues
     - Setting Object.ok to "False" means simulate that the wrapped calls failed somehow, and accept
-      the contents of the incoming Monad as the outcome of the function.
+      the outcome of the incoming Monad as the outcome of the function.
     - Setting Object.ok to "None" means simulate that the function succeeded, and accept the
-      contents of the incoming Monad as the outcome of the function.
+      outcome of the incoming Monad as the outcome of the function.
+
+    It is related to the "Maybe" Monad, but is used for testing only.
+    ---
 
     Example (naive) Usage:
 
     ```python
     @side_effect
     def my_io(io: IOType) -> Monad:
-        file_path = io.contents
+        file_path = io.outcome
         try:
             with open(file_path, "r", encoding="utf-8") as file_pointer:
                 return Monad(IOType(file_path.read(), "", True))
@@ -53,7 +56,7 @@ def side_effect(function: Callable) -> Callable:
         result = unwrap(Monad(IOType(file_path, io.error_msg, io.ok)))
         if not result.ok:
             return None, None
-        return len(result.contents.split("\n")), result.contents
+        return len(result.outcome.split("\n")), result.outcome
 
 
     # Testing: this is what the @side_effect is for. Skip the actual side effect without resorting

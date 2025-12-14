@@ -41,7 +41,7 @@ def fopen(io: IOType, *args, **kwargs) -> Monad:  # pylint: disable=unused-argum
         args and kwargs
 
     Returns:
-        Monad(IOType) where IOType.contents holds a file pointer
+        Monad(IOType) where IOType.outcome holds a file pointer
     """
     return Monad(f_try(open, *args, **kwargs))
 
@@ -62,6 +62,6 @@ def fread(io: IOType, *args, **kwargs) -> Monad:
         IOType
 
     Returns:
-        Monad(IOType) where IOType.contents are the results of the file read.
+        Monad(IOType) where IOType.outcome is the results of the file read.
     """
-    return Monad(f_try(io.contents.read, *args, **kwargs))
+    return Monad(f_try(io.outcome.read, *args, **kwargs))
