@@ -362,10 +362,32 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#tldr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TL;DR
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#training-materials" class="md-nav__link">
     <span class="md-ellipsis">
       
         Training Materials
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#development-and-use-of-this-library" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Development and Use of this Library
       
     </span>
   </a>
@@ -419,6 +441,17 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#why-start-with-monads" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why start with Monads?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#are-monads-pythonic" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -436,6 +469,17 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#development" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Development
+      
+    </span>
+  </a>
   
 </li>
       
@@ -788,10 +832,32 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#tldr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TL;DR
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#training-materials" class="md-nav__link">
     <span class="md-ellipsis">
       
         Training Materials
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#development-and-use-of-this-library" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Development and Use of this Library
       
     </span>
   </a>
@@ -845,6 +911,17 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#why-start-with-monads" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why start with Monads?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#are-monads-pythonic" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -862,6 +939,17 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#development" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Development
+      
+    </span>
+  </a>
   
 </li>
       
@@ -886,37 +974,74 @@
 
 
 <h1 id="functional-programming-support">Functional Programming Support<a class="headerlink" href="#functional-programming-support" title="Permanent link">&para;</a></h1>
-<p>This project offers Python functional programming helpers not covered by the
-official Python function programming tools.</p>
-<p>There are, of course, many quality Python projects doing the same thing. I
-encourage Python developers to explore them and see if they suit their needs.</p>
+<p>This project has three goals:</p>
+<ul>
+<li>Provide functional programming helpers up and beyond official Python functional programming
+  tools</li>
+<li>Assist in teaching junior Python programmers functional programming</li>
+<li>Provide a pathway for Python programmers to more easily learn compiled, typed languages.</li>
+</ul>
+<p>Do not get me wrong: I enjoy programming in Python. Its readability, libraries, and quick
+development cycle is second to none. It is not tied to any programming style, be it <em>imperative</em>,
+<em>procedural</em>, <em>object-oriented</em>, or functional. I am not blind, however, to programming missteps
+and debugging chaos. These obstacles can be prevented by type checking and using easy-to-test,
+"pure" functions.</p>
+<p>There are, of course, many many quality Python projects creating functional tools. I encourage
+developers to explore them as well and see if they suit their needs.</p>
 <div class="admonition note">
 <p>This is my FP library. There are many like it, but this one is mine...</p>
 </div>
 <h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>fpsupport
 </code></pre></div>
+<h2 id="tldr">TL;DR<a class="headerlink" href="#tldr" title="Permanent link">&para;</a></h2>
+<p>This is an example of using monads to hide IO functions.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">fpsupport.jinja</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_template</span><span class="p">,</span> <span class="n">render</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">fpsupport.monad</span><span class="w"> </span><span class="kn">import</span> <span class="n">Monad</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">fpsupport.struct</span><span class="w"> </span><span class="kn">import</span> <span class="n">IOType</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="k">def</span><span class="w"> </span><span class="nf">render_from_file</span><span class="p">(</span><span class="n">io</span><span class="p">:</span> <span class="n">Monad</span><span class="p">,</span> <span class="n">template_filepath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate a message from a jinja2 template.</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="sd">    Any I/O Exceptions will have stopped processing and returned the error message.</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>    <span class="n">result</span> <span class="o">=</span> <span class="n">unwrap</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">load_template</span><span class="p">,</span> <span class="n">template_filepath</span><span class="p">)</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">render</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>    <span class="k">return</span> <span class="n">result</span><span class="o">.</span><span class="n">contents</span> <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">ok</span> <span class="k">else</span> <span class="n">result</span><span class="o">.</span><span class="n">error_msg</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="nb">print</span><span class="p">(</span><span class="n">render_from_file</span><span class="p">(</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>    <span class="n">Monad</span><span class="p">(</span><span class="n">IOType</span><span class="p">()),</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>    <span class="s2">&quot;greeting.txt.j2&quot;</span><span class="p">,</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>    <span class="p">{</span><span class="s2">&quot;holiday&quot;</span><span class="p">:</span> <span class="s2">&quot;Birthday&quot;</span><span class="p">,</span> <span class="s2">&quot;to&quot;</span><span class="p">:</span> <span class="s2">&quot;Mum&quot;</span><span class="p">,</span> <span class="s2">&quot;from&quot;</span><span class="p">:</span> <span class="s2">&quot;Gus&quot;</span><span class="p">}</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="p">))</span>
+</code></pre></div>
+<p>To see how <em>render_from_file</em> is unit tested and how IO is dealt with without mocking, read the
+<a href="examples/jinja2_templating.py">example</a>.</p>
 <h2 id="training-materials">Training Materials<a class="headerlink" href="#training-materials" title="Permanent link">&para;</a></h2>
-<p>Functional programming holds the promise of easy-to-follow, easily maintainable,
-and correct software. Sound familiar? Object-oriented programming also holds
-that promise ... so long as the developers use best practice testing and SOLID
-principles.</p>
-<p>Both FP and OOP can be difficult to exploit without painful education or
-experience. My notes and other materials are posted here to assist folks with
-<em>their</em> painful education or experience.</p>
-<p>Training materials will be published as I become more proficient at both
-functional programming in Python and in documentation. In the meantime, I
-recommend you watch Boot Dev's <a href="https://youtu.be/5QZYGU0C2OA?si=X6n3TtgSBZZUsiC7">Functional Programming Full Course</a>.</p>
+<p>Functional programming (FP) holds the promise of correct, easy to follow, and easily maintained
+software. Object-oriented programming (OOP) also holds that promise. Acceptance-driven,
+behaviour-driven and test- driven development along with integration testing hold programmers to a
+higher quality.</p>
+<p>All of these concepts can be difficult to comprehend without experience. My notes and other
+materials are posted here as well along with their references. My intention is to provide exercises
+as well.</p>
+<p>Training materials will be published as I become more proficient at both functional programming in
+Python and in documentation. In the meantime, I recommend you watch Boot Dev's <a href="https://youtu.be/5QZYGU0C2OA?si=X6n3TtgSBZZUsiC7">Functional
+Programming Full Course</a>.</p>
+<h2 id="development-and-use-of-this-library">Development and Use of this Library<a class="headerlink" href="#development-and-use-of-this-library" title="Permanent link">&para;</a></h2>
+<p>The library is published in PyPi. I am using Agile principles, even as a one-man project. This
+means that the software will be minimal to begin with, but guaranteed to work. As the project
+continues, so grows its worth. The speed of development depends on my professional and family
+work-load.</p>
 <h2 id="statement-on-the-use-of-ai">Statement on the Use of AI<a class="headerlink" href="#statement-on-the-use-of-ai" title="Permanent link">&para;</a></h2>
-<p>See my <a href="content/ai_policy/">personal policy on the use of artificial intelligence</a>.</p>
+<p>See my <a href="content/ai_policy/">Personal Policy on the Use of Artificial Intelligence</a>.</p>
 <h2 id="project-layout">Project layout<a class="headerlink" href="#project-layout" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>mkdocs.yml    # The configuration file.
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>docs/
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    index.md  # The documentation homepage.
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    ...       # Other markdown pages, images and other files.
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>examples/     # How to use the library
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>fpsupport/    # The library. As it expands, so will the folders
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>test/         # Unit testing. Functional and integration testing are not applicable.
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>mkdocs.yml    # The configuration file.
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>docs/
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    index.md  # The documentation homepage.
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    ...       # Other markdown pages, images and other files.
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>examples/     # How to use the library
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>fpsupport/    # The library. As it expands, so will the folders
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>test/         # Unit testing. Functional and integration testing are not applicable.
 </code></pre></div>
 <h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
 <h3 id="monads">Monads<a class="headerlink" href="#monads" title="Permanent link">&para;</a></h3>
@@ -927,33 +1052,46 @@ be used as a logged chain-of-responsibility<sup id="fnref:1"><a class="footnote-
 not only system calls but any other side effect or non-deterministic<sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup> value
 that plays havoc with the proof of a function. It is used in dependency
 injection<sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup>, so there would be no need to use monkeypatching in unit tests.</p>
+<h4 id="why-start-with-monads">Why start with Monads?<a class="headerlink" href="#why-start-with-monads" title="Permanent link">&para;</a></h4>
+<p>Oh my stars, you say. Monads ... are you kidding me?</p>
+<p>When it comes to functional programming, Monads are considered advanced by most of the online
+courses I remember. There are many, many tutorials on Monads on YouTube. Their quality varies. Some
+lectures on them are pure Category Theory, which can be depressing to the programmer in a rush.
+Others are pedantic, pushing ideology over need. Most ignore Python.</p>
+<p>Monads are hard to explain but are so very, very useful. I am starting with Monads because I have
+already used them to great visible effect on a critical, team-based project at work. I write
+<em>visible</em> because Python decorators -- effectively the definition of a higher-order function -- are
+so ubiquitous as to be unnoticed.</p>
 <h4 id="are-monads-pythonic">Are monads Pythonic?<a class="headerlink" href="#are-monads-pythonic" title="Permanent link">&para;</a></h4>
-<p>This will be debated in the training materials once written. The answer is,
-quite frankly, up to the writer. They certainly seem to add complication at
-first glance, violating <em>simple is better than complex</em>. However, it enforces
-<em>explicit is better than implicit</em> and, properly used, is the epitome of
-<em>readability counts</em>.</p>
 <p>See <a href="https://peps.python.org/pep-0020/">The Zen of Python</a>.</p>
+<p>This will be debated in the training materials once written. The answer is, quite frankly, up to
+the writer. They certainly seem to add complication at first glance, violating <em>simple is better
+than complex</em>. However, it enforces <em>explicit is better than implicit</em> and, properly used, is the
+epitome of <em>readability counts</em>.</p>
+<h2 id="development">Development<a class="headerlink" href="#development" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>make<span class="w"> </span>setup
+</code></pre></div>
+<p>Now you can program away without messing up my standards. For suggested VS Code plugins, see
+<a href="setup/preferences/examples/README.md">preferences</a>.</p>
 <div class="footnote">
 <hr />
 <ol>
 <li id="fn:1">
-<p>Refactoring.Guru. [Chain of Responsibility]
-(https://refactoring.guru/design-patterns/chain-of-responsibility), retrieved
+<p>Refactoring.Guru. <a href="https://refactoring.guru/design-patterns/chain-of-responsibility">Chain of
+Responsibility</a>, retrieved
 Nov 26, 2025.&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
 </li>
 <li id="fn:2">
-<p>Test-driven development, used to encourage technical correctness. It
-works alongside BDD (Behaviour-Driven Development for system behaviour), and
-ATDD (Acceptance Test-Driven Development as an Agile collaboration with
-stakeholders).&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+<p>Test-driven development, used to encourage technical correctness. It works alongside BDD
+  (Behaviour-Driven Development for system behaviour), and ATDD (Acceptance Test-Driven
+  Development as an Agile collaboration with stakeholders).&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
 </li>
 <li id="fn:3">
 <p>For example, a random number generator.&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
 </li>
 <li id="fn:4">
-<p>That is to say, converting a system call made from inside a function to
-  an argument of that function.&#160;<a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+<p>That is to say, converting a system call made from inside a function to an argument of that
+  function.&#160;<a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">&#8617;</a></p>
 </li>
 </ol>
 </div>
