@@ -70,6 +70,11 @@ spellcheck:
 	poetry run pylint --disable all --enable spelling --spelling-dict en_CA \
 	  --spelling-private-dict-file=setup/dictionaries/whitelist fpsupport examples
 
+# Documentation --------------------------------------------------------------
+.PHONY: docs
+docs:
+	poetry run mkdocs gh-deploy
+
 # Testing --------------------------------------------------------------------
 
 .PHONY: unittest

@@ -72,7 +72,7 @@ filterwarnings = [
   "ignore::pydantic.fields.PydanticDeprecatedSince20",
   "ignore:DeprecationWarning"
 ]
-pythonpath = [ "secrets_manager_service", "tests" ]
+pythonpath = [ "fpsupport", "tests" ]
 
 ## Linting ---------------------------------------------------------------------------------------
 # The two tools should conform to each other. Pylint for detection, Black to reformat
