@@ -5,13 +5,14 @@ File: test/unit/test_monad.py
 Every monad in the fpsupport/monad directory are tested here.
 """
 
-from typing import Self
+from dataclasses import dataclass
+from typing import Any, Self
 from unittest import TestCase
 
 import pytest
 
 from fpsupport.exception import MonadException
-from fpsupport.monad import Monad, unwrap
+from fpsupport.monad import Monad, Maybe, unwrap
 
 
 class TestBaseClass(TestCase):
@@ -49,7 +50,7 @@ class TestBaseClass(TestCase):
             """Demonstrate map and bind operator."""
 
             @staticmethod
-            def unit(outer: int) -> Self:  # pyright: ignore[reportGeneralTypeIssues]
+            def unit(outer: Any = None) -> Self:  # pyright: ignore[reportGeneralTypeIssues]
                 return MyMonad(outer)
 
             def map(self) -> Self:
@@ -73,3 +74,34 @@ class TestBaseClass(TestCase):
         # then
         with pytest.raises(MonadException):
             _ = m >> (lambda x: str(x + 1))
+
+class TestMaybe(TestCase):
+    """Test the Maybe Monad Class."""
+
+    def test_maybe_fails_with_ok_attribute_missing(self):
+        """Creating a Maybe without an ok attribute will throw an Exception."""
+
+        with pytest.raises(MonadException):
+            Maybe.unit(5)
+
+    def test_flat_map_nok(self):
+        """Test that execution stops on nok."""
+
+        @dataclass
+        class MyType:  # pylint: disable=missing-class-docstring
+            outcome: int
+            ok: bool = True
+
+        def monadic_add_natural_number(a: MyType, b: int) -> Maybe:
+            return Maybe(MyType(a.outcome + b)) if b > 0 else Maybe(MyType(a.outcome, False))
+
+        # when
+        m = Maybe.unit(MyType(1))
+
+        # then
+        result = m.join(
+            monadic_add_natural_number, 1).join(  # This is ok
+            monadic_add_natural_number, 0).join(  # This stops the chain at the last value
+            monadic_add_natural_number, 1)  # This last one will not execute
+
+        assert unwrap(result).outcome == 2

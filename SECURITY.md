@@ -28,7 +28,7 @@ preferred method is to create an issue in this project's GitHub repository:
       ```text
       SECURITY CRIT SQL injection.
       The user input in `main.py line 23` was never escaped before being accepted
-      in `secrets_manager_service/backends/postgres.py line 423`
+      in `fpsupport/backends/postgres.py line 423`
       ```
 
 ### Time to Respond / Time to Recover

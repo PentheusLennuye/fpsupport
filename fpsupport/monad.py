@@ -66,12 +66,9 @@ class Monad:
     An interface to the base class. It contains the three mandatory functions,
     and it also creates aliases for the different names for those functions.
 
-    Note that this monad has an inherent "Maybe" component: if a derived
-    subclass's map() returns None, then bound execution is stopped.
-
     Attributes:
-        There are no attributes. Any attribute will be defined by a derived
-        class __init()__, and populated by the class unit() function.
+        There is one and only one attribute: the wrapped type, called "outer". It is the "a" in
+        a -> M a.
     """
 
     def __init__(self, outer: Any = None) -> None:
@@ -202,7 +199,7 @@ class Monad:
         """
         return type(self).unit(self.map().outer)
 
-    # Aliases
+    # Aliases. These must be copied into subclasses as well
     chain = flat_map
     flatMap = flat_map
     fmap = flat_map
@@ -212,7 +209,41 @@ class Monad:
     pure = unit
     select = flat_map
     then_apply = flat_map
-    unwrap = identity
+    __rshift__ = flat_map
+
+
+class Maybe(Monad):
+    """The Monad Maybe Pattern.
+
+    This prevents any bound functions further down a chain from executing, freezing the last
+    result.
+
+    The "outer" type must have an attribute "ok."
+
+    This is related to the "side_effect" [decorator](decorators.py), but used in production chains,
+    not testing.
+    """
+
+    @staticmethod
+    def unit(outer: Any = None):
+        """The type converter, wrapping the arguments into this Monad. a -> M a."""
+        if not hasattr(outer, "ok"):
+            raise exception.MonadException('The "Maybe" Monad needs a type with attribute "ok"')
+        return Maybe(outer)
+
+    def flat_map(self, f: Callable, *args, **kwargs) -> Self:
+        """Execute _f_ with the wrapped type as the first argument if ok is True."""
+        return self if self.outer.ok is False else super().flat_map(f, *args, **kwargs)
+
+    chain = flat_map
+    flatMap = flat_map
+    fmap = flat_map
+    join = flat_map
+    join_map = flat_map
+    joinMap = flat_map
+    pure = unit
+    select = flat_map
+    then_apply = flat_map
     __rshift__ = flat_map
 
 

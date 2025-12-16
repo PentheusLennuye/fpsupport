@@ -22,7 +22,7 @@ license = "Apache-2.0"
 name = "fpsupport"
 readme = "README.md"
 requires-python = ">=3.9"
-version = "0.1.0"
+version = "0.2.0"
 
 [project.urls]
 changelog = "https://github.com/PentheusLennuye/fpsupport/blob/master/CHANGELOG.md"
@@ -72,7 +72,7 @@ filterwarnings = [
   "ignore::pydantic.fields.PydanticDeprecatedSince20",
   "ignore:DeprecationWarning"
 ]
-pythonpath = [ "secrets_manager_service", "tests" ]
+pythonpath = [ "fpsupport", "tests" ]
 
 ## Linting ---------------------------------------------------------------------------------------
 # The two tools should conform to each other. Pylint for detection, Black to reformat

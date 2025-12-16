@@ -19,11 +19,16 @@ from dataclasses import dataclass
 
 @dataclass
 class IOType:
-    """A type used in a Monad to capture IO side effects: contents, errors, and error messages."""
+    """A type used in a Monad to capture IO side effects: outcome, errors, and error messages.
 
-    def __init__(self, contents: Any = None, error_msg: str | None = None, ok: bool | None = True):
+    IOType.outcome is the testable, provable results of an IO call, failure or success.
+    IOType.error_msg is meta-information about why a call failed.
+    IOType.ok is the meta-information on whether the call passed, failed, or was skipped in a test.
+    """
+
+    def __init__(self, outcome: Any = None, error_msg: str | None = None, ok: bool | None = True):
         """Initialize IOType, ensuring values are of type."""
-        self.contents: Any = contents
+        self.outcome: Any = outcome
         if not isinstance(error_msg, str | None):
             raise TypeError("IOType attribute 'error_msg' must be of type str or None")
 

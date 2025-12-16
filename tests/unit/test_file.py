@@ -47,7 +47,7 @@ class TestOpen(TestCase):
         # then
         new_io = unwrap(result)
         assert new_io.ok
-        assert new_io.contents == "Another visitor!"
+        assert new_io.outcome == "Another visitor!"
         os_open.assert_called_once_with("fake.txt", "r", encoding="utf-8")
 
 
@@ -96,5 +96,5 @@ class TestRead(TestCase):
         # then
         new_io = unwrap(result)
         assert new_io.ok
-        assert new_io.contents == "Another visitor!"
+        assert new_io.outcome == "Another visitor!"
         file_object.read.assert_called_once_with()

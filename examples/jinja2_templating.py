@@ -33,7 +33,7 @@ from fpsupport.struct import IOType
 def render_from_file(io: Monad, template_filepath: str, data: dict) -> str | None:
     """Generate a message from a jinja2 template."""
     result = unwrap(io.flat_map(load_template, template_filepath).flat_map(render, data))
-    return result.contents if result.ok else None
+    return result.outcome if result.ok else None
 
 
 if __name__ == "__main__":

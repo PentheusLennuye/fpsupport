@@ -12,6 +12,8 @@
 
 .DEFAULT_GOAL := setup
 .SILENT:
+PREFDIR = setup/preferences
+EXAMPLES = $(PREFDIR)/examples
 
 # Environment ---------------------------------------------------------------
 
@@ -23,8 +25,15 @@ venv:
 githooks:
 	setup/githook_setup.sh
 
+.PHONY: defaults 
+defaults:
+	[ -f code.code-workspace ] || cp $(EXAMPLES)/code.code-workspace .; \
+	[ -f $(PREFDIR)/black.toml ] || cp $(EXAMPLES)/black $(PREFDIR)/black.toml; \
+	[ -f $(PREFDIR)/pylintc ] || cp $(EXAMPLES)/pylintrc $(PREFDIR); \
+	[ -f /etc/NIXOS ] && ([ -f $(PREFDIR)/pylintc ] || cp $(EXAMPLES)/shell.nix .)
+
 .PHONY: setup
-setup: venv githooks
+setup: venv githooks defaults
 
 # Linting --------------------------------------------------------------------
 .PHONY: pylint
@@ -61,17 +70,22 @@ spellcheck:
 	poetry run pylint --disable all --enable spelling --spelling-dict en_CA \
 	  --spelling-private-dict-file=setup/dictionaries/whitelist fpsupport examples
 
+# Documentation --------------------------------------------------------------
+.PHONY: docs
+docs:
+	poetry run mkdocs gh-deploy
+
 # Testing --------------------------------------------------------------------
 
 .PHONY: unittest
 unittest:
 	echo "Running python unit tests."; \
-	poetry run python -m pytest test/unit
+	poetry run python -m pytest tests/unit
 
 .PHONY: coverage
 coverage:
 	echo "Running python unit tests for all green at 100% coverage."; \
-	poetry run python -m pytest test/unit \
+	poetry run python -m pytest tests/unit \
 	--cov --cov-report=term-missing | grep 'TOTAL.*100%'
 
 .PHONY: tests
