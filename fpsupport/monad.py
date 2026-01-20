@@ -37,7 +37,7 @@ down:
   You still have a pile of sticks. In his words, "They didn't turn into frogs."
 
 A _monad_ is a monoid, but since it is in the class of endofunctors, its functions must accept and
-return the same type. A monad has some mathematic rules. We will skip them here and just get on
+return the same type. A monad has some math rules. We will skip them here and just get on
 with its practical application. A monad is an object that hides data and does hidden operations on
 that hidden data while it processes outside ("bound") functions.
 
@@ -55,7 +55,7 @@ accepts objects (or named tuples) as its wrapped type.
 
 # pylint: disable=unused-variable
 
-from typing import Callable, Self, Any
+from typing import Any, Callable, Self
 
 from . import exception
 
@@ -63,20 +63,19 @@ from . import exception
 class Monad:
     """The Monad Base Class.
 
-    An interface to the base class. It contains the three mandatory functions,
-    and it also creates aliases for the different names for those functions.
+    An interface to the base class. It contains the three mandatory functions, and it also creates
+    aliases for the different names for those functions.
 
     Attributes:
         There is one and only one attribute: the wrapped type, called "outer". It is the "a" in
-        a -> M a.
+        a → M a.
     """
 
     def __init__(self, outer: Any = None) -> None:
         """Initializes the object with internal attributes.
 
-        Monads are meant to be called from unit(). However, since we are using
-        a Python class to represent the monad rather than a module full of
-        functions, init will work just as well.
+        Monads are meant to be called from unit(). However, since we are using a Python class to
+        represent the monad rather than a module full of functions, init will work just as well.
 
         Args:
             outer: the wrapped type
@@ -88,22 +87,21 @@ class Monad:
         self.outer: Any = outer
 
     @staticmethod
-    def unit(outer: Any = None) -> Self:  # type: ignore pylint: disable=undefined-variable
-        """Wraps the arguments into this Monad. a -> M a.
+    def unit(outer: Any = None) -> "Monad":  # type: ignore pylint: disable=undefined-variable
+        """Wraps the arguments into this Monad. a → M a.
 
-        Also known as the type converter. Also known as pure() and return(),
-        although using the latter as a function name in Python is a Bad
-        Idea.™ It is one of the two "additional" functors as it is not an
-        endofunctor.
+        Also known as the type converter. Also known as pure() and return(), although using the
+        latter as a function name in Python is a Bad Idea.™ It is one of the two "additional"
+        functors as it is not an endofunctor.
 
-        It may seem silly to return a new Monad (or subclass) rather than self,
-        but one of the tenets of functional programming is immutable data.
+        It may seem silly to return a new Monad (or subclass) rather than self, but one of the
+        tenets of functional programming is immutable data.
 
         Args:
           outer: any object
 
         Returns:
-          A Monad. Note that a subclassing does not work here as this is a
+          A Monad. Note that sub-classing does not work here as this is a
           static method.
         """
         return Monad(outer)
@@ -112,7 +110,7 @@ class Monad:
     def identity(self) -> Self:
         """Returns this Monad.
 
-        identity() fulfills the left identity law of monads.
+        identity() fulfils the left identity law of monads.
 
         Args:
             This Monad, or a sub-classed equivalent
@@ -126,23 +124,20 @@ class Monad:
     def flat_map(self, f: Callable, *args, **kwargs) -> Self:
         """Execute _f_ with the wrapped type as the first argument.
 
-        Unwraps the original type _outer_, sends it to self.map() for any pre-
-        execution massaging, sends the result of self.map() to _f_ along with
-        other arguments and returns the new Monad.
+        Unwraps the original type _outer_, sends it to self.map() for any pre-execution massaging,
+        sends the result of self.map() to _f_ along with other arguments and returns the new Monad.
 
-        This the second of the "additional" functions, as it is not an
-        endofunctor.
+        This the second of the "additional" functions, as it is not an endofunctor.
 
-        _f_ is not considered part of the monad, but makes use of the monad's
-        composition properties. It _must_ return a Monad.
+        _f_ is not considered part of the monad, but makes use of the monad's composition
+        properties. It _must_ return a Monad.
 
-             ,--- unwrap   ,---- return
-        M a -> (a -> M b) -> M b
-                   `---- this represents the bound function
+            ┌── unwrap  ┌──── return new monad
+        M a → (a → M b) → M b
+                 └──── execute the bound function
 
-        Also known as chain, join, join_map, select, then_apply and the bind
-        operator. The bind operator in Python is represented with ">>", the
-        __rshift__ operator.
+        Also known as chain, join, join_map, select, then_apply and the bind operator. The bind
+        operator in Python is represented with ">>", the __rshift__ operator.
 
         Args:
             This Monad, or its sub-classed equivalent
@@ -154,9 +149,8 @@ class Monad:
             A Monad, or its sub-classed equivalent
 
         Raises:
-            MonadException if the function fails to return the same type as
-            the original wrapped value. Making the check is necessary in a
-            duck-typed language.
+            MonadException if the function fails to return the same type as the original wrapped
+            value. Making the check is necessary in a duck-typed language.
         """
         result = f(self.map().outer, *args, **kwargs)
         if not isinstance(result, type(self)):
@@ -166,14 +160,13 @@ class Monad:
             )
         return result
 
-    def map(self) -> Self:
+    def map(self) -> "Monad":
         """A function that is run just prior to the flat_map's bound function.
 
-        This function is not required for the definition of a monad. However,
-        it allows for a defined set of repeatable operations.
+        This function is not required for the definition of a monad. However, it allows for a
+        defined set of repeatable operations.
 
-        map() is meant to be overridden, so its base here is just a simple
-        clone.
+        map() is meant to be overridden, so its base here is just a simple clone.
 
         Args:
             This Monad or its sub-classed equivalent
@@ -183,7 +176,7 @@ class Monad:
         """
         return Monad.unit(self.outer)
 
-    def final(self) -> Self:
+    def final(self) -> "Monad":
         """Run the map by itself without calling any function.
 
         This is called optionally if the map needs to be run one last time. For
@@ -199,7 +192,7 @@ class Monad:
         """
         return type(self).unit(self.map().outer)
 
-    # Aliases. These must be copied into subclasses as well
+    # Aliases. These must be copied into sub-classes as well
     chain = flat_map
     flatMap = flat_map
     fmap = flat_map
@@ -247,15 +240,14 @@ class Maybe(Monad):
     __rshift__ = flat_map
 
 
-# Convenience functions -----------------------------------------------------
+# Convenience functions ─────────────────────────────────────────────────────────────────────────
 
 
 def unwrap(m: Monad) -> Any:
     """Return the internally wrapped value of a Monad or subclass.
 
-    It is not right to access an object's attributes directly, even if it is
-    a simple "outer." One day the internal variables might change. It is better
-    to use a public API. This is that API.
+    It is not right to access an object's attributes directly, even if it is a simple "outer." One
+    day the internal variables might change, so it is better to use a public API.
 
     Args:
         A Monad or sub-classed Monad

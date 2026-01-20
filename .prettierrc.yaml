@@ -1,0 +1,17 @@
+---
+indent_style: space
+indent_size: 4
+insert_final_newline: true
+max_line_length: 99
+overrides:
+  - files: "*.json"
+    options:
+      tabWidth: 2
+  - files: "*.yaml"
+    options:
+      tabWidth: 2
+  - files: "*.md"
+    options:
+      printWidth: 70
+      proseWrap: always
+      tabWidth: 4

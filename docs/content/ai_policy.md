@@ -36,4 +36,4 @@ created the sources of its training.
 
 [^1]: Soenke, Ahrens. 2022. _How to Take Smart Notes: One Simple Technique to
  Boost Writing, Learning and Thinking_, 2nd ed, Self-published.
-[^2]: Cal Newport. 2021. _A World Without Email: Reimagining Work in an Age of Communication Overload_, Portfolio.
+[^2]: Cal Newport. 2021. _A World Without Email: Re-imagining Work in an Age of Communication Overload_, Portfolio.

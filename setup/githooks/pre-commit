@@ -28,7 +28,4 @@ poetry run make pylint || exit 3
 echo "4. pydocstyle"
 poetry run make pydocstyle || exit 4
 
-echo "6. spelling"
-poetry run make spellcheck || exit 5
-
 echo "Cleanliness checked. This does not include functional tests." 

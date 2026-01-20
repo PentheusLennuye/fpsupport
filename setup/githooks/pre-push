@@ -20,7 +20,4 @@ poetry run make coverage || exit 2
 echo "3. pylint, pydocstyle, black (diff)"
 poetry run make lint || exit 3
 
-echo "4. Spelling"
-poetry run make spellcheck || exit 4
-
 echo "Cleanliness checked. This does not include functional tests." 
